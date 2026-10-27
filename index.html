@@ -2043,7 +2043,15 @@ const _renderStats=renderStats;
 renderStats=function(){_renderStats();const el=$("#statsBody .cheat");if(el)el.insertAdjacentHTML("afterbegin",trameStatsHtml())};
 
 function scriptFor(p){
-  if(p.brief&&/OUVERTURE ET PERMISSION/.test(p.brief)&&/PRÉSENTATION D.EASYMEMBERS/.test(p.brief)&&/\nBut :/.test(p.brief))return p.brief;
+  if(p.brief&&/OUVERTURE ET PERMISSION/.test(p.brief)&&/PRÉSENTATION D.EASYMEMBERS/.test(p.brief)&&/\nBut :/.test(p.brief)){
+    if(/PRÉSENTATION COMPLÈTE/.test(p.brief))return p.brief;
+    const gen=scriptForGen(p),i=gen.indexOf("PRÉSENTATION COMPLÈTE"),j=gen.indexOf("\n3. RAISON",i);
+    const block=gen.slice(i,j).trim(),k=p.brief.search(/\n3\.\s*RAISON/);
+    return k>0?p.brief.slice(0,k)+"\n\n"+block+"\n"+p.brief.slice(k):p.brief+"\n\n"+block;
+  }
+  return scriptForGen(p);
+}
+function scriptForGen(p){
   const x=parlerFor(p),who=decideur(p),net=(p.nbClubs||0)>1,ref=refFor(p),pr=p.prenom||"",hello=pr?"Bonjour "+pr:"Bonjour";
   const lg=p.logiciel&&p.logiciel!=="Inconnu"?p.logiciel:"",lgTxt=lg||"votre logiciel",club=p.club,dem=who||"le gérant";
   const v=p.verif||{};
