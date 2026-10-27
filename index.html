@@ -712,6 +712,8 @@ label.f{text-transform:none;letter-spacing:0;font-size:13.5px}
 .ln-why .ln-k,.ln-ex .ln-k{color:var(--muted)}
 .ln-ex{background:#fff;border-radius:12px;padding:10px 12px}
 .tr-step .sc{display:grid;gap:10px}
+.bx-c{color:var(--orange-deep);font-weight:700}
+.bx-a{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
 
 body{margin:0}
 .login{position:fixed;inset:0;z-index:50;background:var(--white);display:grid;place-items:center;padding:24px max(20px,env(safe-area-inset-left,0px))}
@@ -789,6 +791,7 @@ body{margin:0}
     <div class="band">
       <div class="wrap cols">
         <div class="block">
+          <div id="cardBoite" hidden style="margin-bottom:18px"><h2>Ta boîte mail ce matin <span class="c" id="cBoite"></span></h2><div class="list" id="pBoite"></div></div>
           <div id="cardRep" hidden style="margin-bottom:18px"><h2>Réponses à traiter <span class="c" id="cRep"></span></h2><div class="list" id="pRep"></div></div>
           <h2>Tes 3 priorités</h2>
           <ul class="prio" id="pPrio"><li class="empty">Rien pour l'instant.</li></ul>
@@ -1061,6 +1064,10 @@ function renderPoint(){
   const nw=p.nouveaux||[];$("#cardNew").hidden=!nw.length;$("#cNew").textContent=nw.length?nw.length+" ajoutés":"";
   $("#pNew").innerHTML=nw.map(r=>`<div class="item"><span class="t">${esc(r.club)}</span><span class="tag">${esc(r.ville||"")}</span><span class="d">${esc(r.angle||"")}</span></div>`).join("");
   $("#cardBilan").hidden=!p.bilanSemaine;$("#pBilan").textContent=p.bilanSemaine||"";
+  const bx=p.boite||[];$("#cardBoite").hidden=!bx.length;$("#cBoite").textContent=bx.length?bx.filter(b=>/r[ée]pondre/i.test(b.etat||"")).length+" à répondre":"";
+  $("#pBoite").innerHTML=bx.map((b,k)=>`<div class="item bx"><span class="t">${esc(b.club||b.de||"")}</span><span class="tag ${/r[ée]pondre/i.test(b.etat||"")?"haute":/attente|suivre/i.test(b.etat||"")?"moyenne":"basse"}">${esc(b.etat||"")}</span><span class="d">${b.objet?`<b>${esc(b.objet)}</b> · `:""}${esc(b.resume||"")}${b.ouEnEst?`<br><span class="sub">Où tu en es : ${esc(b.ouEnEst)}</span>`:""}${b.conseil?`<br><span class="bx-c">À répondre : ${esc(b.conseil)}</span>`:""}</span>${b.mailId||b.prospectId?`<span class="d bx-a">${b.mailId?`<button class="mini" data-bxmail="${esc(b.mailId)}">Voir la réponse prête</button>`:""}${b.prospectId?`<button class="mini" data-bxp="${esc(b.prospectId)}">Ouvrir la fiche</button>`:""}</span>`:""}</div>`).join("");
+  $("#pBoite").querySelectorAll("[data-bxmail]").forEach(x=>x.onclick=()=>{mEdit=null;mFilter="tous";showTab("mails");renderMails();setTimeout(()=>{const el=[...document.querySelectorAll("#mlist [data-copy]")].find(e=>e.dataset.copy===x.dataset.bxmail);el&&el.closest(".letter").scrollIntoView({behavior:"smooth",block:"center"})},150)});
+  $("#pBoite").querySelectorAll("[data-bxp]").forEach(x=>x.onclick=()=>openSheet(x.dataset.bxp));
   const sg=p.signaux||[];$("#cardSig").hidden=!sg.length;$("#cSig").textContent=sg.length?sg.length+" signaux":"";
   $("#pSig").innerHTML=sg.map(r=>`<div class="item"><span class="t">${esc(r.club||r.titre)}</span><span class="tag when">${esc(r.type||"signal")}</span><span class="d">${esc(r.titre&&r.club?r.titre:"")}${r.titre&&r.club?" · ":""}${esc(r.action||"")}${r.source&&/^https?:/.test(r.source)?` <a class="src" href="${esc(r.source)}" target="_blank" rel="noopener">source</a>`:""}</span></div>`).join("");
 }
