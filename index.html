@@ -890,6 +890,20 @@ body{margin:0}
             <div class="tref"><span class="tn">8</span><b>Conclure et verrouiller <small>30 s</small></b><span class="goal">Deux créneaux précis, l'adresse mail répétée à voix haute, ses tarifs demandés.</span><q>Mardi à 10h ou jeudi à 14h, qu'est-ce qui vous arrange ? Je vous envoie l'invitation sur quelle adresse ?</q></div>
           </div>
         </div>
+        <div class="ch wide">
+          <h3>EasyMembers en une minute</h3>
+          <p>La présentation complète, si un gérant te demande « vous faites quoi exactement ? ».</p>
+          <ol>
+            <li><b>L'accueil sur iPad</b> : l'appli aux couleurs du club, le prospect choisit son objectif (se défouler, mincir, se tonifier, se muscler, souplesse), son activité, et on lui met en avant les bonnes formules (la plus choisie, starter pack, options).</li>
+            <li><b>L'inscription et la signature</b> : CGV, photo, double signature (adhérent et conseiller), échéancier automatique, paiement au choix (CB, prélèvement avec mandat SEPA, chèque, espèces), contrat PDF envoyé par mail.</li>
+            <li><b>Les relances</b> : écran des devis non signés et mails de relance automatiques.</li>
+            <li><b>Le tableau de bord</b> : contrats du jour, de la semaine, du mois, taux de conversion, CA comparé à l'an dernier, ventes par conseiller, dossiers incomplets (RIB manquant), objectifs par club et par vendeur.</li>
+            <li><b>La personnalisation</b> : parcours d'inscription, formules, options, codes promo, CGV, bilan sportif, autorisation parentale.</li>
+            <li><b>Le multi-clubs</b> : un espace par club, une vue globale pour le gérant du réseau, des accès gérant et manager.</li>
+            <li><b>Les logiciels</b> : Resamania, la fiche client remonte toute seule. Deciplus, les formules sont synchronisées, sans liaison fiche client. On se branche, on ne remplace pas.</li>
+            <li><b>Le prix</b> : 100 € par mois, 300 € de mise en place une seule fois, un iPad à l'accueil.</li>
+          </ol>
+        </div>
         <div class="ch">
           <h3>Les règles d'or au téléphone</h3>
           <ul>
@@ -1963,7 +1977,7 @@ function scriptSections(t){
     cur.lines.push(l)}
   return secs;
 }
-const nice=s=>{s=s.toLowerCase();return s.charAt(0).toUpperCase()+s.slice(1).replace(/\barc\b/,"ARC").replace(/ipad/,"iPad")};
+const nice=s=>{s=s.toLowerCase();return s.charAt(0).toUpperCase()+s.slice(1).replace(/\barc\b/,"ARC").replace(/ipad/,"iPad").replace(/easymembers/gi,"EasyMembers")};
 function scriptHtml(t){return `<div class="sc">${scriptSections(t).map(s=>`<h4>${esc(nice(s.title))}${s.sub?` <small>${esc(s.sub)}</small>`:""}</h4>${s.lines.map(lineHtml).join("")}`).join("")}</div>`}
 const TRAME={},TRAME_TXT={};
 function trameHtml(t,key){
@@ -2070,6 +2084,19 @@ function scriptFor(p){
 "Si la personne coupe avec « c'est combien ? » : « 100 € par mois. Mais avant de parler prix, je voudrais voir si ça a du sens chez vous. Je peux vous poser deux questions ? »",
 "Piège : réciter toutes les fonctionnalités ou parler 2 minutes. Trois idées, pas plus : l'iPad à l'accueil, la signature sur place, le suivi des ventes. Le reste, c'est pour la démo.",
 "Transition : « Et si je vous appelle vous, c'est pour une raison précise. »",
+"","PRÉSENTATION COMPLÈTE D'EASYMEMBERS (1 min, si on te la demande)",
+"But : avoir sous la main TOUT ce que fait EasyMembers, si le gérant veut le détail ou si c'est un gros club. Tu ne la récites pas à tout le monde : seulement s'il demande « vous faites quoi exactement ? » ou après la découverte.",
+"« Je vous fais le tour en une minute. »",
+"1. L'accueil sur iPad : « L'appli s'affiche aux couleurs de votre club. La personne choisit son objectif, se défouler, mincir, se tonifier, se muscler ou la souplesse, puis son activité, et on lui met en avant les bonnes formules : la plus choisie, le starter pack, les options. »",
+"2. L'inscription et la signature : « Elle valide les CGV, on prend sa photo, elle signe et votre conseiller signe aussi. L'échéancier se calcule tout seul, elle choisit son paiement, CB, prélèvement avec mandat SEPA, chèque ou espèces, et le contrat PDF lui part par mail. »",
+"3. Les relances : « Les devis qui ne sont pas signés tout de suite vont dans un écran de relances, et les mails de relance partent automatiquement. »",
+"4. Le tableau de bord : « Vous voyez vos contrats du jour, de la semaine et du mois, votre taux de conversion, votre chiffre d'affaires comparé à l'an dernier, les ventes de chaque conseiller et les dossiers où il manque un RIB. Vous fixez des objectifs par club et par vendeur. »",
+"5. La personnalisation : « C'est vous qui construisez votre parcours d'inscription, vos formules, vos options, vos codes promo et vos CGV. Il y a aussi un bilan sportif personnalisable et l'autorisation parentale pour les mineurs. »",
+`6. ${net?"Le multi-clubs : « Chaque club a son espace, et vous voyez tout depuis un seul compte, avec des accès gérant de réseau et manager de club. »":"Si vous ouvrez un 2e club : « Chaque club a son espace, et vous voyez tout depuis un seul compte, avec des accès gérant et manager. »"}`,
+"7. Les logiciels : « Avec Resamania, la fiche client remonte toute seule. Avec Deciplus, vos formules sont synchronisées. On ne remplace pas votre logiciel, on se branche dessus. »  → Ne promets jamais de liaison fiche client avec Deciplus.",
+"8. Le prix : « 100 € par mois et 300 € de mise en place, une seule fois. Il faut simplement un iPad à l'accueil. »",
+"« Le plus parlant, c'est de vous le montrer en 20 minutes avec vos propres formules. »  → Enchaîne sur la conclusion, ou reviens aux questions s'il n'a encore rien dit de son fonctionnement.",
+"Piège : faire ce tour complet à froid, dès le début. Il décroche au bout de 30 secondes. Garde-le pour quand il te le demande ou pour la démo.",
 "","3. RAISON DE L'APPEL (20 s)",
 "But : lui tendre un problème qu'il reconnaît, pour qu'il ait envie d'en parler.",
 `« Ce que les gérants ${net?"de clubs avec plusieurs sites ":""}me disent souvent, c'est trois choses : les inscriptions à l'accueil prennent du temps, il manque régulièrement un RIB ou une signature dans les dossiers, et c'est difficile de savoir qui vend quoi${net?", surtout quand chaque club fait un peu à sa façon":""}. »`,
