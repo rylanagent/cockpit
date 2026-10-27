@@ -1552,8 +1552,11 @@ async function afterSend(m,via,when){
   if(p.emailPret&&p.emailPret.corps&&!p.emailPret.envoye&&m.source==="emailPret")patch.emailPret={...p.emailPret,envoye:true};
   await db.doc("prospects/"+p.id).update(patch);
 }
+function maxJour(){const v=parseInt(olCfg().maxJour);return v>0?v:5}
+function sentToday(){return mails.filter(x=>x.statut==="envoye"&&x.envoyeLe===TODAY&&/Outlook/.test(x.envoyeVia||"")).length}
 async function sendOne(m,when,quiet){
   const to=mailTo(m);
+  if(sentToday()>=maxJour()){toast(`Limite du jour atteinte (${maxJour()} mails) pour protéger ton compte Outlook. Le reste partira demain.`);return false}
   if(!okMail(to)){if(!quiet)toast(to?"Adresse email invalide : "+to:"Pas d'adresse email pour ce mail");return false}
   try{await olSend(m,when);await afterSend(m,OL.acc?"Outlook":"Outlook (Make)",when);if(!quiet)toast(when?"Envoi programmé":"Mail envoyé à "+to);return true}
   catch(e){if(!quiet)toast("Envoi impossible : "+olMsg(e));return false}
@@ -1588,7 +1591,7 @@ function sendBtnHtml(key){const s=olState();
 function olBarHtml(){
   const s=olState(),pend=mails.filter(m=>m.statut!=="envoye"&&(m.canal||"Email")==="Email");
   if(s==="on")return `<div class="olbar on"><span class="ol-ic">O</span><div class="ol-t"><b>Outlook connecté</b>${esc(OL.acc.username||"")}${OL.last?` · réponses vérifiées à ${OL.last.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}`:""}</div><div class="mail-tools"><button class="btn line" data-ol="check">Vérifier les réponses</button><button class="btn send" data-ol="bulk" ${pend.length&&canWrite?"":"disabled"}>Tout envoyer${pend.length?" ("+pend.length+")":""}</button></div></div>`;
-  if(s==="make")return `<div class="olbar on"><span class="ol-ic">O</span><div class="ol-t"><b>Envoi Outlook actif (via Make)</b>Tes mails partent de ta boîte Outlook. Les réponses sont à suivre dans Outlook.</div><div class="mail-tools"><button class="btn send" data-ol="bulk" ${pend.length&&canWrite?"":"disabled"}>Tout envoyer${pend.length?" ("+pend.length+")":""}</button></div></div>`;
+  if(s==="make")return `<div class="olbar on"><span class="ol-ic">O</span><div class="ol-t"><b>Envoi Outlook actif (via Make)</b>${sentToday()} / ${maxJour()} mails envoyés aujourd'hui. La limite protège ton compte Outlook contre un blocage anti-spam.</div><div class="mail-tools"><button class="btn send" data-ol="bulk" ${pend.length&&canWrite?"":"disabled"}>Tout envoyer${pend.length?" ("+pend.length+")":""}</button></div></div>`;
   if(s==="off")return `<div class="olbar"><span class="ol-ic">O</span><div class="ol-t"><b>Envoi en un clic</b>Connecte ton Outlook pro : les mails partent de ta boîte, la fiche et la relance se mettent à jour toutes seules.${OL.err?`<br><span style="color:var(--red)">${esc(OL.err)}</span>`:""}</div><button class="btn send" data-ol="login">Connecter Outlook</button></div>`;
   if(s==="config")return `<div class="olbar"><span class="ol-ic">O</span><div class="ol-t"><b>Envoi en un clic depuis ton Outlook pro</b>Une seule configuration de 5 minutes et tes mails partent directement d'ici.</div><button class="btn line" data-ol="settings">Configurer</button></div>`;
   return `<div class="olbar"><span class="ol-ic">O</span><div class="ol-t"><b>Envoi Outlook</b>${esc(olHint())}</div></div>`;
@@ -1620,7 +1623,7 @@ function bulkHtml(){
   const pend=mails.filter(m=>m.statut!=="envoye"&&(m.canal||"Email")==="Email");
   if(bulk.step==="run")return `<div class="panel"><h3>Envoi en cours… ${bulk.done} / ${bulk.total}</h3><div class="bar2"><i style="width:${Math.round(bulk.done/Math.max(1,bulk.total)*100)}%"></i></div><p class="small muted">Garde la page ouverte. ${bulk.err?bulk.err+" échec"+(bulk.err>1?"s":""):""}</p></div>`;
   const ok=pend.filter(m=>okMail(mailTo(m)));
-  return `<div class="panel"><h3>Envoyer ${ok.length} mail${ok.length>1?"s":""} depuis ton Outlook ?</h3><ul>${pend.map(m=>{const t=mailTo(m);return okMail(t)?`<li><b>${esc(m.club||"")}</b> · ${esc(t)} · ${esc(m.objet||"")}</li>`:`<li class="skip">${esc(m.club||"")} · pas d'adresse, ignoré</li>`}).join("")}</ul><div class="actions"><button class="btn send" id="bulkGo" ${ok.length?"":"disabled"}>Oui, envoyer maintenant</button><button class="btn line" id="bulkNo">Annuler</button></div><p class="small muted">Chaque fiche passe en « Contacté » avec une relance téléphonique dans 3 jours ouvrés.</p></div>`;
+  return `<div class="panel"><h3>Envoyer ${Math.min(ok.length,Math.max(0,maxJour()-sentToday()))} mail${ok.length>1?"s":""} depuis ton Outlook ?</h3>${ok.length>maxJour()-sentToday()?`<p class="small" style="margin:0;color:var(--orange-deep)">Limite de ${maxJour()} mails par jour : les ${ok.length-Math.max(0,maxJour()-sentToday())} autres attendront demain.</p>`:""}<ul>${pend.map(m=>{const t=mailTo(m);return okMail(t)?`<li><b>${esc(m.club||"")}</b> · ${esc(t)} · ${esc(m.objet||"")}</li>`:`<li class="skip">${esc(m.club||"")} · pas d'adresse, ignoré</li>`}).join("")}</ul><div class="actions"><button class="btn send" id="bulkGo" ${ok.length?"":"disabled"}>Oui, envoyer maintenant</button><button class="btn line" id="bulkNo">Annuler</button></div><p class="small muted">Chaque fiche passe en « Contacté » avec une relance téléphonique dans 3 jours ouvrés.</p></div>`;
 }
 function newMailHtml(){
   const ps=prospects.filter(p=>!done(p.statut)&&p.categorie!=="X").sort((a,b)=>(!!b.email-!!a.email)||a.club.localeCompare(b.club));
@@ -1661,7 +1664,8 @@ async function confirmSend(b,m){
   if(!ok&&b.isConnected){b.disabled=false;delete b.dataset.sure;b.classList.remove("sure");b.textContent="Envoyer avec Outlook"}
 }
 async function runBulk(){
-  const list=mails.filter(m=>m.statut!=="envoye"&&(m.canal||"Email")==="Email"&&okMail(mailTo(m)));
+  const list=mails.filter(m=>m.statut!=="envoye"&&(m.canal||"Email")==="Email"&&okMail(mailTo(m))).slice(0,Math.max(0,maxJour()-sentToday()));
+  if(!list.length){bulk=null;renderMails();toast(`Limite du jour atteinte (${maxJour()} mails). Le reste partira demain.`);return}
   bulk={step:"run",done:0,total:list.length,err:0};renderMails();
   for(const m of list){const ok=await sendOne(m,null,true);if(!ok)bulk.err++;bulk.done++;$("#mPanel").innerHTML=bulkHtml();await new Promise(r=>setTimeout(r,1200))}
   const n=bulk.total-bulk.err;bulk=null;renderMails();toast(n+" mail"+(n>1?"s":"")+" envoyé"+(n>1?"s":"")+(list.length-n?" · "+(list.length-n)+" échec"+(list.length-n>1?"s":""):""));
@@ -1734,7 +1738,8 @@ function renderReglages(force){
   el.innerHTML=`<div class="cheat rg">
    <div class="ch wide"><h3>Envoyer depuis Outlook avec Make (le plus simple)</h3>
      <div class="actions"><span class="state ${c.makeUrl?"on":""}"><i></i>${c.makeUrl?"Branché à Make":"Pas encore branché"}</span></div>
-     <div class="row"><label class="f">Adresse du webhook Make<input id="rg-mk" value="${esc(c.makeUrl||"")}" placeholder="https://hook.eu1.make.com/…" spellcheck="false"></label><label class="f">Ton adresse, pour le mail de test<input id="rg-mkt" type="email" value="${esc(c.testTo||"")}" placeholder="toi@outlook.fr"></label></div>
+     <div class="row"><label class="f">Adresse du webhook Make<input id="rg-mk" value="${esc(c.makeUrl||"")}" placeholder="https://hook.eu1.make.com/…" spellcheck="false"></label><label class="f">Ton adresse, pour le mail de test<input id="rg-mkt" type="email" value="${esc(c.testTo||"")}" placeholder="toi@outlook.fr"></label><label class="f">Mails max par jour<input id="rg-max" type="number" min="1" max="100" value="${esc(c.maxJour||5)}"></label></div>
+     <p class="small muted" style="margin:0">Adresse récente : reste à 5 par jour la première semaine, puis 10, puis 20. Un envoi trop rapide fait bloquer le compte par Microsoft.</p>
      <div class="actions"><button class="btn" id="rgSaveMk" ${canWrite?"":"disabled"}>Enregistrer</button><button class="btn line" id="rgTestMk">M'envoyer un mail de test</button></div>
      <details class="tplmore" ${c.makeUrl?"":"open"}><summary>Comment le brancher (5 minutes, une seule fois)</summary>
      <ol class="stp">
@@ -1776,7 +1781,7 @@ function renderReglages(force){
      <div class="actions"><button class="btn line" id="tAdd">Ajouter un modèle</button><button class="btn" id="tSave" ${canWrite?"":"disabled"}>Enregistrer les modèles</button><button class="btn ghost" id="tReset">Revenir aux modèles d'origine</button></div>
    </div></div>`;
   const rd=el.querySelector("[data-copy-redir]");if(rd)rd.onclick=()=>copyTo(rd.dataset.copyRedir,rd);
-  const mkSave=$("#rgSaveMk");if(mkSave)mkSave.onclick=async()=>{const u=$("#rg-mk").value.trim();if(u&&!/^https:\/\/hook\.[a-z0-9.]*make\.com\//i.test(u)){toast("L'adresse doit commencer par https://hook.…make.com/");return}mkSave.blur();try{await db.doc("config/outlook").set({...olCfg(),makeUrl:u,testTo:$("#rg-mkt").value.trim()});toast(u?"Make branché":"Make débranché")}catch(e){toast("Impossible d'enregistrer")}};
+  const mkSave=$("#rgSaveMk");if(mkSave)mkSave.onclick=async()=>{const u=$("#rg-mk").value.trim();if(u&&!/^https:\/\/hook\.[a-z0-9.]*make\.com\//i.test(u)){toast("L'adresse doit commencer par https://hook.…make.com/");return}mkSave.blur();try{await db.doc("config/outlook").set({...olCfg(),makeUrl:u,testTo:$("#rg-mkt").value.trim(),maxJour:Math.max(1,parseInt($("#rg-max").value)||5)});toast(u?"Make branché":"Make débranché")}catch(e){toast("Impossible d'enregistrer")}};
   const mkTest=$("#rgTestMk");if(mkTest)mkTest.onclick=async()=>{const u=$("#rg-mk").value.trim()||olCfg().makeUrl,t=$("#rg-mkt").value.trim();if(!u){toast("Colle d'abord l'adresse du webhook");return}if(!okMail(t)){toast("Mets ton adresse mail pour le test");return}try{await makeSend({destinataire:t,objet:"Test du Cockpit EasyMembers",corps:"Bonjour Rylan,\n\nSi tu lis ce mail, l'envoi depuis le Cockpit fonctionne.\n\nBonne journée,",club:"Test"},u);toast("Test envoyé à Make, regarde ta boîte dans 1 minute")}catch(e){toast("Make ne répond pas : vérifie l'adresse du webhook")}};
   const save=async(patch,msg)=>{try{await db.doc("config/outlook").set({...olCfg(),...patch});toast(msg)}catch(e){toast("Impossible d'enregistrer")}};
   $("#rgSaveOl").onclick=async()=>{const cid=$("#rg-cid").value.trim();if(cid&&!/^[0-9a-f-]{36}$/i.test(cid)){toast("L'identifiant doit ressembler à xxxxxxxx-xxxx-…");return}$("#rgSaveOl").blur();await save({clientId:cid,tenant:$("#rg-ten").value.trim(),type:$("#rg-type").value},"Outlook configuré");OL.cid="";};
