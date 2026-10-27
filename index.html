@@ -878,15 +878,16 @@ body{margin:0}
       <div class="cheat">
         <div class="ch wide">
           <h3>La trame d'appel</h3>
-          <p>Toujours dans cet ordre. Chaque étape a un seul but : passer à la suivante.</p>
+          <p>Toujours dans cet ordre : on se présente, on dit ce qu'on fait, puis on écoute. Chaque étape a un seul but : passer à la suivante.</p>
           <div class="trame-ref">
             <div class="tref"><span class="tn">1</span><b>Ouverture et permission <small>10 s</small></b><span class="goal">Obtenir le droit de parler 30 secondes.</span><q>Je vous appelle sans rendez-vous : je vous dis en 30 secondes pourquoi, et vous me dites si ça vaut le coup de continuer. Ça vous va ?</q></div>
-            <div class="tref"><span class="tn">2</span><b>Raison de l'appel <small>20 s</small></b><span class="goal">Lui tendre un problème qu'il peut reconnaître, avec une référence proche.</span><q>Ce que les gérants nous disent souvent, c'est que les inscriptions prennent du temps et qu'il manque des papiers. Ça vous parle, ou chez vous c'est rodé ?</q></div>
-            <div class="tref"><span class="tn">3</span><b>Découverte <small>2 à 3 min</small></b><span class="goal">Situation, outil, problème, impact, volume. Il parle 70 % du temps.</span><q>Ça représente quoi, à peu près ? En temps, en dossiers incomplets, en personnes qui repartent sans signer ?</q></div>
-            <div class="tref"><span class="tn">4</span><b>Reformulation <small>15 s</small></b><span class="goal">Obtenir son « oui, c'est ça » avant de présenter quoi que ce soit.</span><q>Si je résume bien : … et ce qui vous coûte le plus, c'est … C'est bien ça ?</q></div>
-            <div class="tref"><span class="tn">5</span><b>Proposition de valeur <small>30 s</small></b><span class="goal">Un bénéfice par problème entendu, deux maximum, avec ses mots.</span><q>Justement, c'est exactement ce qu'on règle : formule, contrat et mandat SEPA signés sur l'iPad, et vous voyez qui vend quoi.</q></div>
-            <div class="tref"><span class="tn">6</span><b>Objections</b><span class="goal">Accueillir, questionner, répondre, puis revenir au rendez-vous.</span><q>Je comprends. Qu'est-ce qui vous fait dire ça ?</q></div>
-            <div class="tref"><span class="tn">7</span><b>Conclure et verrouiller <small>30 s</small></b><span class="goal">Deux créneaux précis, l'adresse mail répétée à voix haute, ses tarifs demandés.</span><q>Mardi à 10h ou jeudi à 14h, qu'est-ce qui vous arrange ? Je vous envoie l'invitation sur quelle adresse ?</q></div>
+            <div class="tref"><span class="tn">2</span><b>Présentation d'EasyMembers <small>20 s</small></b><span class="goal">Dire concrètement ce qu'on fait avant toute question : trois idées, pas plus.</span><q>EasyMembers, c'est une appli sur iPad pour vendre vos abonnements à l'accueil : la personne choisit sa formule, signe son contrat et son mandat SEPA sur la tablette, et vous voyez les ventes en direct.</q></div>
+            <div class="tref"><span class="tn">3</span><b>Raison de l'appel <small>20 s</small></b><span class="goal">Lui tendre un problème qu'il peut reconnaître.</span><q>Ce que les gérants nous disent souvent, c'est que les inscriptions prennent du temps et qu'il manque des papiers. Ça vous parle, ou chez vous c'est rodé ?</q></div>
+            <div class="tref"><span class="tn">4</span><b>Découverte <small>2 à 3 min</small></b><span class="goal">Situation, outil, problème, impact, volume. Il parle 70 % du temps.</span><q>Ça représente quoi, à peu près ? En temps, en dossiers incomplets, en personnes qui repartent sans signer ?</q></div>
+            <div class="tref"><span class="tn">5</span><b>Reformulation <small>15 s</small></b><span class="goal">Obtenir son « oui, c'est ça » avant de présenter quoi que ce soit.</span><q>Si je résume bien : … et ce qui vous coûte le plus, c'est … C'est bien ça ?</q></div>
+            <div class="tref"><span class="tn">6</span><b>Proposition de valeur <small>30 s</small></b><span class="goal">Un bénéfice par problème entendu, deux maximum, avec ses mots.</span><q>Justement, c'est exactement ce qu'on règle : formule, contrat et mandat SEPA signés sur l'iPad, et vous voyez qui vend quoi.</q></div>
+            <div class="tref"><span class="tn">7</span><b>Objections</b><span class="goal">Accueillir, questionner, répondre, puis revenir au rendez-vous.</span><q>Je comprends. Qu'est-ce qui vous fait dire ça ?</q></div>
+            <div class="tref"><span class="tn">8</span><b>Conclure et verrouiller <small>30 s</small></b><span class="goal">Deux créneaux précis, l'adresse mail répétée à voix haute, ses tarifs demandés.</span><q>Mardi à 10h ou jeudi à 14h, qu'est-ce qui vous arrange ? Je vous envoie l'invitation sur quelle adresse ?</q></div>
           </div>
         </div>
         <div class="ch">
@@ -2028,7 +2029,7 @@ const _renderStats=renderStats;
 renderStats=function(){_renderStats();const el=$("#statsBody .cheat");if(el)el.insertAdjacentHTML("afterbegin",trameStatsHtml())};
 
 function scriptFor(p){
-  if(p.brief&&/OUVERTURE ET PERMISSION/.test(p.brief)&&/\nBut :/.test(p.brief))return p.brief;
+  if(p.brief&&/OUVERTURE ET PERMISSION/.test(p.brief)&&/PRÉSENTATION D.EASYMEMBERS/.test(p.brief)&&/\nBut :/.test(p.brief))return p.brief;
   const x=parlerFor(p),who=decideur(p),net=(p.nbClubs||0)>1,ref=refFor(p),pr=p.prenom||"",hello=pr?"Bonjour "+pr:"Bonjour";
   const lg=p.logiciel&&p.logiciel!=="Inconnu"?p.logiciel:"",lgTxt=lg||"votre logiciel",club=p.club,dem=who||"le gérant";
   const v=p.verif||{};
@@ -2054,21 +2055,31 @@ function scriptFor(p){
 "","1. OUVERTURE ET PERMISSION (10 s)",
 "But : obtenir le droit de parler 30 secondes. Tu ne vends rien ici, tu demandes la permission.",
 `« ${hello}, Rylan d'EasyMembers. Je vous appelle sans rendez-vous : je vous dis en 30 secondes pourquoi, et vous me dites si ça vaut le coup de continuer. Ça vous va ? »  → Puis tais-toi et attends. Ce « ça vous va ? » lui laisse le contrôle et fait baisser la garde.`,
-"Si la personne dit « allez-y » ou « oui » : passe directement à l'étape 2, sans remerciements à rallonge.",
+"Si la personne dit « allez-y » ou « oui » : passe directement à la présentation, sans remerciements à rallonge.",
 "Si la personne dit « je n'ai pas le temps » : « Je comprends tout à fait. Je vous rappelle plutôt demain matin ou jeudi après-midi ? C'est 5 minutes. »  → Note le créneau choisi et mets-le dans l'agenda tout de suite.",
-"Si la personne dit « c'est pour quoi ? » d'un ton sec : « C'est au sujet de vos inscriptions à l'accueil, je vous explique en 30 secondes. »  → Enchaîne sur l'étape 2.",
+"Si la personne dit « c'est pour quoi ? » d'un ton sec : « C'est au sujet de vos inscriptions à l'accueil, je vous explique en 30 secondes. »  → Enchaîne sur la présentation.",
 "Piège : « Je ne vous dérange pas ? » ou « Vous avez deux minutes ? ». Ces phrases invitent à dire non. Ta formule à toi lui donne une raison de dire oui.",
-"Transition : « Merci. Alors voilà pourquoi je vous appelle. »",
-"","2. RAISON DE L'APPEL (20 s)",
-"But : lui tendre un problème qu'il reconnaît, pour qu'il ait envie d'en parler. On ne présente toujours pas EasyMembers.",
-`« Je vous appelle parce que je travaille avec des salles comme ${ref}${net?", et notamment des clubs qui ont plusieurs sites comme vous":""}. Ce que les gérants me disent souvent, c'est trois choses : les inscriptions à l'accueil prennent du temps, il manque régulièrement un RIB ou une signature dans les dossiers, et c'est difficile de savoir qui vend quoi${net?", surtout quand chaque club fait un peu à sa façon":""}. »`,
+"Transition : « Merci. Je vous explique d'abord en deux mots ce qu'on fait. »",
+"","2. PRÉSENTATION D'EASYMEMBERS (20 s)",
+"But : qu'il comprenne en 20 secondes qui tu es et ce que fait EasyMembers, concrètement, avant que tu lui poses la moindre question.",
+`« EasyMembers, c'est une appli sur iPad qui sert à vendre vos abonnements directement à l'accueil. Concrètement, quand quelqu'un vient s'inscrire, il choisit son objectif et sa formule sur la tablette, il signe son contrat et son mandat SEPA dessus, et le contrat lui part tout seul par mail. Plus de papier, plus de ressaisie. »  → Phrases courtes, débit calme. Imagine que tu lui montres la tablette.`,
+`« Et de votre côté, vous voyez en direct ${net?"les ventes de chaque club et de chaque conseiller":"qui vend quoi, conseiller par conseiller"}, et ça se branche sur votre logiciel de gestion${lg?", "+lg+" chez vous":", comme Resamania ou Deciplus"}. On équipe aujourd'hui plus de 80 salles en France, dont ${ref}. »`,
+"Version courte s'il est pressé : « On fait une appli sur iPad pour signer les abonnements à l'accueil : formule, contrat et mandat SEPA sur la tablette, et vous suivez les ventes en direct. »",
+"Si la personne dit « c'est comme l'inscription en ligne ? » : « Non, c'est pour la vente en face à face, quand la personne est dans votre club. C'est là que se joue la signature. »",
+"Si la personne dit « on a déjà un logiciel » : « Parfait, on ne le remplace pas, on se branche dessus. Je vous explique pourquoi je vous appelle vous. »  → Puis étape suivante.",
+"Si la personne coupe avec « c'est combien ? » : « 100 € par mois. Mais avant de parler prix, je voudrais voir si ça a du sens chez vous. Je peux vous poser deux questions ? »",
+"Piège : réciter toutes les fonctionnalités ou parler 2 minutes. Trois idées, pas plus : l'iPad à l'accueil, la signature sur place, le suivi des ventes. Le reste, c'est pour la démo.",
+"Transition : « Et si je vous appelle vous, c'est pour une raison précise. »",
+"","3. RAISON DE L'APPEL (20 s)",
+"But : lui tendre un problème qu'il reconnaît, pour qu'il ait envie d'en parler.",
+`« Ce que les gérants ${net?"de clubs avec plusieurs sites ":""}me disent souvent, c'est trois choses : les inscriptions à l'accueil prennent du temps, il manque régulièrement un RIB ou une signature dans les dossiers, et c'est difficile de savoir qui vend quoi${net?", surtout quand chaque club fait un peu à sa façon":""}. »`,
 "« Est-ce que ça vous parle, ou chez vous c'est bien rodé ? »  → Question ouverte : il choisit sa réponse. Puis silence, compte jusqu'à trois.",
 `Si tu as un détail propre au club, glisse-le ici : ${x.douleur}  → C'est ce qui montre que tu n'appelles pas au hasard.`,
 "Si la personne dit « oui, ça nous parle » : « Ah, qu'est-ce qui vous parle le plus dans les trois ? »  → Tu passes à la découverte avec son problème à lui.",
 "Si la personne dit « non, chez nous ça roule » : « Tant mieux ! Par curiosité, ça se passe comment chez vous, une inscription ? »  → Ne lutte pas : passe à la découverte, c'est souvent là que les vrais problèmes sortent.",
 "Si la personne dit « on a déjà un logiciel » : « Très bien, on ne le remplace pas, on se branche dessus. Justement, ça se passe comment entre le moment où la personne dit oui et le moment où elle est dans votre logiciel ? »",
-"Piège : enchaîner sur le produit parce qu'il a dit « oui ça me parle ». Pas encore : tu ne sais pas encore ce qui le gêne vraiment.",
-"","3. DÉCOUVERTE (2 à 3 min, il parle 70 % du temps)",
+"Piège : repartir dans la présentation parce qu'il a dit « oui ça me parle ». Tu as déjà présenté EasyMembers : maintenant, c'est à lui de parler.",
+"","4. DÉCOUVERTE (2 à 3 min, il parle 70 % du temps)",
 "But : comprendre son fonctionnement, trouver SON problème et lui faire dire ce que ça lui coûte. C'est l'étape la plus importante de l'appel.",
 "1. Situation : « Aujourd'hui, quand quelqu'un vient s'inscrire, ça se passe comment, du premier bonjour à la signature ? »  → Écoute s'il parle de papier, d'ordinateur, de tablette, d'inscription en ligne. Le papier est ton meilleur angle.",
 `2. Outil : « ${lg?"Vous êtes toujours sur "+lg+" pour la gestion ?":"Et derrière, vous êtes sur quel logiciel de gestion ?"} »  → Resamania : la fiche client remonte toute seule. Deciplus : les formules sont synchronisées. Fitness Vendor : demande ce qui lui manque.`,
@@ -2079,14 +2090,14 @@ function scriptFor(p){
 "Si la personne parle d'un problème que tu n'avais pas prévu : creuse-le, c'est un cadeau. « Racontez-moi, ça arrive souvent ? »",
 "Pourquoi c'est important : plus il parle de son problème, plus il se convainc tout seul. Note ses mots exacts, tu vas les réutiliser à l'étape suivante.",
 "Piège : poser les cinq questions à la suite comme un formulaire. Rebondis sur ses réponses, c'est une conversation.",
-"","4. REFORMULATION (15 s)",
+"","5. REFORMULATION (15 s)",
 "But : lui montrer que tu as compris, et obtenir son « oui, c'est ça ». C'est ce oui qui te donne le droit de présenter EasyMembers.",
 "« Si je résume bien : aujourd'hui [ce qu'il t'a décrit, avec ses mots], et ce qui vous coûte le plus, c'est [son problème], à peu près [son chiffre]. C'est bien ça ? »",
 `Exemple : « Si je résume : aujourd'hui vos conseillers font les inscriptions sur papier puis ressaisissent tout dans ${lgTxt}, il manque souvent un RIB, et ça vous prend une vingtaine de minutes par adhérent. C'est bien ça ? »`,
-"Si la personne dit « oui, c'est ça » : passe à l'étape 5.",
+"Si la personne dit « oui, c'est ça » : passe à l'étape 6.",
 "Si la personne corrige : « Ah d'accord, donc c'est plutôt … ? »  → Reformule à nouveau. Sans le oui, ne présente rien.",
 "Piège : reformuler avec tes mots à toi (« vous manquez de digitalisation »). Utilise SES mots, c'est ce qui le fait se sentir compris.",
-"","5. PROPOSITION DE VALEUR (30 s)",
+"","6. PROPOSITION DE VALEUR (30 s)",
 "But : relier EasyMembers à SON problème, et seulement à lui. Un bénéfice par problème entendu, deux maximum.",
 "« Justement, c'est exactement ce qu'on règle. »  → Toujours commencer par ce mot : il fait le lien avec ce qu'il vient de dire.",
 "Si son problème, c'est le temps ou la saisie : « Le prospect choisit sa formule sur l'iPad à l'accueil, signe son contrat et son mandat SEPA sur place, et le contrat part tout seul par mail. Plus rien à ressaisir. »",
@@ -2096,7 +2107,7 @@ function scriptFor(p){
 `« C'est ce qu'utilisent déjà plus de 80 salles en France, dont ${ref}. »  → La preuve sociale, en une phrase, à la fin.`,
 "Piège : réciter toutes les fonctionnalités. Il retient une seule chose : celle qui règle son problème. Le reste, c'est pour la démo.",
 "Transition : « Le plus simple, c'est que je vous le montre. »  → Tu enchaînes directement sur la conclusion, ou sur les objections s'il en soulève une.",
-"","6. OBJECTIONS (accueillir, questionner, répondre)",
+"","7. OBJECTIONS (accueillir, questionner, répondre)",
 "But : comprendre ce qui bloque vraiment, répondre, puis revenir au rendez-vous. Une objection n'est pas un non, c'est une question.",
 "La méthode, à chaque fois : 1) accueillir : « Je comprends », « C'est une vraie question ». 2) questionner : « Qu'est-ce qui vous fait dire ça ? ». 3) répondre court. 4) revenir au rendez-vous.",
 "« C'est combien ? »  → « 100 € par mois et 300 € de mise en place, une seule fois. Un seul abonnement de plus signé dans le mois et c'est remboursé. Le mieux, c'est de voir en 20 minutes si ça vaut le coup chez vous. »",
@@ -2108,7 +2119,7 @@ function scriptFor(p){
 "« On n'a pas d'iPad »  → « Un seul iPad à l'accueil suffit, c'est un achat ponctuel. Et pour la démo, j'apporte le mien. »",
 "« Je dois en parler à mon associé »  → « Bien sûr. Le plus simple, c'est qu'il soit là pour la démo : vous êtes disponibles tous les deux plutôt mardi ou jeudi ? »",
 "Piège : répondre trop vite ou trop long. Une objection mal comprise, c'est une réponse à côté. Pose toujours ta question avant.",
-"","7. CONCLURE ET VERROUILLER (30 s)",
+"","8. CONCLURE ET VERROUILLER (30 s)",
 "But : repartir avec une date de démo dans l'agenda, une adresse mail confirmée et ses tarifs à préparer.",
 "« Je vous propose 20 minutes pour vous le montrer sur l'iPad, avec vos propres formules. Mardi à 10h ou jeudi à 14h, qu'est-ce qui vous arrange ? »  → Toujours deux créneaux précis. Jamais « quand vous voulez » : c'est la meilleure façon de ne jamais avoir de date.",
 "Si la personne choisit un créneau : « Parfait. Je vous envoie l'invitation sur quelle adresse mail ? »  → Répète la date, l'heure et le mail à voix haute, lettre par lettre si besoin.",
