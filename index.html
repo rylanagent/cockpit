@@ -1195,6 +1195,7 @@ body{margin:0}
 </dialog>
 <div class="toast" id="toast" hidden></div>
 
+<script type="importmap">{"imports":{"onnxruntime-web":"https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/esm/ort.min.js"}}</script>
 <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.27.0/lib/msal-browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
@@ -2702,15 +2703,46 @@ function coPickV(g){
   if(coStore.vname){const v=coVoices.find(x=>x.name===coStore.vname);if(v)return v}
   return coVoices.find(v=>coVG(v)===g&&coVQ(v)>=30)||coVoices.find(v=>coVQ(v)>=30)||coVoices.find(v=>coVG(v)===g)||coVoices[0];
 }
-function coSpeak(t,force){
-  if(!force&&!$("#coVoice")?.checked||!("speechSynthesis" in window)||!t)return;
-  try{speechSynthesis.cancel();
-    const txt=String(t).replace(/…/g,", ").replace(/\s*,\s*,/g,",").replace(/« | »/g,"");
-    const u=new SpeechSynthesisUtterance(txt);u.lang="fr-FR";const v=coPickV(coGenre());if(v){u.voice=v;u.lang=v.lang}
-    u.rate=Number(coStore.rate||0.95);u.pitch=1;u.volume=1;
-    u.onstart=()=>$("#coAv")?.classList.add("talk");u.onend=u.onerror=()=>$("#coAv")?.classList.remove("talk");
-    setTimeout(()=>speechSynthesis.speak(u),60)}catch(e){}
+/* voix réaliste : modèle neuronal Piper qui tourne dans le navigateur (gratuit), ou ElevenLabs avec ta clé */
+const CO_PIPER={h:"fr_FR-tom-medium",f:"fr_FR-siwis-medium"};
+let coTTS=null,coAudio=null,coSpeakId=0;const coPiperReady={};
+function coEngineVoice(){return coStore.engine||(coCanPiper()?"piper":"device")}
+function coCanPiper(){return !window.claude&&typeof WebAssembly!=="undefined"&&!!navigator.storage?.getDirectory}
+async function coLoadTTS(){if(!coTTS)coTTS=await import("https://cdn.jsdelivr.net/npm/@diffusionstudio/vits-web@1.0.3/dist/vits-web.js");return coTTS}
+async function coPrepPiper(g,onP){
+  const id=CO_PIPER[g];if(coPiperReady[id])return true;
+  const tts=await coLoadTTS();const have=await tts.stored().catch(()=>[]);
+  if(!have.includes(id))await tts.download(id,pr=>onP&&pr.total&&onP(Math.round(100*pr.loaded/pr.total)));
+  coPiperReady[id]=true;return true;
 }
+function coRing(on){$("#coAv")?.classList.toggle("talk",on)}
+function coStop(){coSpeakId++;try{speechSynthesis.cancel()}catch(e){}if(coAudio){coAudio.pause();coAudio=null}coRing(false)}
+function coPlayBlob(blob,my){if(my!==coSpeakId)return;const url=URL.createObjectURL(blob);const a=new Audio(url);a.playbackRate=Number(coStore.rate||0.95)<0.9?0.94:Number(coStore.rate||0.95)>1?1.06:1;coAudio=a;
+  a.onplay=()=>coRing(true);a.onended=a.onerror=()=>{coRing(false);URL.revokeObjectURL(url)};a.play().catch(()=>coRing(false))}
+function coDeviceSpeak(txt){
+  try{const u=new SpeechSynthesisUtterance(txt);u.lang="fr-FR";const v=coPickV(coGenre());if(v){u.voice=v;u.lang=v.lang}
+    u.rate=Number(coStore.rate||0.95);u.pitch=1;u.onstart=()=>coRing(true);u.onend=u.onerror=()=>coRing(false);setTimeout(()=>speechSynthesis.speak(u),60)}catch(e){}
+}
+const CO_EL={h:"pNInz6obpgDQGcFmaJgB",f:"XrExE9yKIg1WjnnlVkGX"};
+async function coSpeak(t,force){
+  if(!force&&!$("#coVoice")?.checked||!t)return;
+  coStop();const my=++coSpeakId;
+  const txt=String(t).replace(/…/g,", ").replace(/\s*,\s*,/g,",").replace(/[«»]/g,"").replace(/\s+/g," ").trim();
+  const eng=coEngineVoice(),g=coGenre();
+  if(eng==="eleven"&&coStore.elKey){
+    try{coRing(true);const r=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent((g==="f"?coStore.elF:coStore.elH)||CO_EL[g]||CO_EL.h)}?output_format=mp3_44100_64`,{method:"POST",headers:{"xi-api-key":coStore.elKey,"Content-Type":"application/json","Accept":"audio/mpeg"},body:JSON.stringify({text:txt,model_id:"eleven_multilingual_v2",voice_settings:{stability:.45,similarity_boost:.8,style:.15}})});
+      if(!r.ok)throw new Error("ElevenLabs "+r.status);coPlayBlob(await r.blob(),my);return}
+    catch(e){coRing(false);coVoiceNote("La voix ElevenLabs n'a pas répondu (clé ou crédits ?). Voix réaliste gratuite à la place.");}
+  }
+  if((eng==="piper"||eng==="eleven")&&coCanPiper()){
+    try{coRing(true);if(!coPiperReady[CO_PIPER[g]])coVoiceNote("Chargement de la voix réaliste, une seule fois (environ 60 Mo)…");
+      await coPrepPiper(g,pc=>coVoiceNote(`Chargement de la voix réaliste : ${pc} %`));coVoiceNote("");
+      const tts=await coLoadTTS();const wav=await tts.predict({text:txt,voiceId:CO_PIPER[g]});coPlayBlob(wav,my);return}
+    catch(e){coRing(false);console.warn(e);coVoiceNote("La voix réaliste n'a pas pu se charger ici, voix de l'appareil à la place.");}
+  }
+  if(my===coSpeakId)coDeviceSpeak(txt);
+}
+function coVoiceNote(t){const el=$("#coVNote");if(el){el.textContent=t;el.hidden=!t}const h=$("#coHint");if(h&&!$("#coCall").hidden){if(t){h.textContent=t;h.hidden=false}else if(/voix/i.test(h.textContent))h.hidden=true}}
 
 /* ---------- micro ---------- */
 const coSR=window.SpeechRecognition||window.webkitSpeechRecognition;let coRec=null,coRecOn=false,coRecBase="",coMicBlocked=false;
@@ -2723,7 +2755,7 @@ function coMic(){
     coRec.onresult=e=>{let t="";for(const r of e.results)t+=r[0].transcript;$("#coSay").value=(coRecBase?coRecBase+" ":"")+t;coGrow()};
     coRec.onerror=e=>{coRecOn=false;$("#coMic").classList.remove("on");if(/not-allowed|service-not-allowed|audio-capture/.test(e.error)){coMicBlocked=true;coHint(CO_DICTEE);$("#coSay").focus()}};
     coRec.onend=()=>{coRecOn=false;$("#coMic").classList.remove("on");if($("#coAuto").checked&&$("#coSay").value.trim()&&!coMicBlocked)coSend()};
-    try{speechSynthesis.cancel()}catch(e){}coRec.start();coRecOn=true;$("#coMic").classList.add("on");
+    coStop();coRec.start();coRecOn=true;$("#coMic").classList.add("on");
   }catch(e){coMicBlocked=true;coHint(CO_DICTEE);$("#coSay").focus()}
 }
 function coGrow(){const t=$("#coSay");t.style.height="auto";t.style.height=Math.min(t.scrollHeight,160)+"px"}
@@ -2741,10 +2773,14 @@ function renderCoach(){
    <div class="co-club"><select id="coPros" class="search"><option value="">Choisir un club…</option>${pros.map(p=>`<option value="${esc(p.id)}" ${CO.prospect===p.id?"selected":""}>${esc(p.club)}${p.ville?" · "+esc(String(p.ville).split(" / ")[0]):""}${p.reseau==="Resofit"?" · Resofit":""}</option>`).join("")}</select><span class="small muted">Le gérant prend le prénom, le logiciel et la taille du club.</span></div>
    <div class="co-opts"><div><div class="co-lbl">Difficulté</div><div class="co-seg" id="coDiff">${["facile","normal","coriace"].map(d=>`<button data-cod="${d}" aria-pressed="${CO.diff===d}">${d[0].toUpperCase()+d.slice(1)}</button>`).join("")}</div></div>
      <div><div class="co-lbl">Réglages</div><label class="co-chk"><input type="checkbox" id="coVoice" ${coStore.voice===false?"":"checked"}> Le gérant parle à voix haute</label><label class="co-chk"><input type="checkbox" id="coAuto" ${coStore.auto===false?"":"checked"}> Envoi auto quand tu as fini de parler</label></div>
-     <div><div class="co-lbl">Voix du gérant</div><div class="co-club"><select id="coVSel" class="search"><option value="">Automatique (la plus naturelle)</option></select>
+     <div><div class="co-lbl">Voix du gérant</div>
+       <div class="co-seg" id="coEng" style="margin-bottom:10px">${coCanPiper()?`<button data-coe="piper" aria-pressed="${coEngineVoice()==="piper"}">Réaliste</button>`:""}<button data-coe="eleven" aria-pressed="${coEngineVoice()==="eleven"}">Ultra réaliste</button><button data-coe="device" aria-pressed="${coEngineVoice()==="device"}">Appareil</button></div>
+       <div id="coElBox" ${coEngineVoice()==="eleven"?"":"hidden"} class="co-club" style="margin-bottom:10px"><input id="coElKey" class="search" type="password" placeholder="Clé API ElevenLabs" value="${esc(coStore.elKey||"")}" style="flex:1 1 260px;width:auto"><span class="small muted" style="max-width:52ch">Voix quasi humaine. Crée un compte gratuit sur elevenlabs.io (environ 10 minutes de voix par mois offertes), copie ta clé API ici. Elle reste dans ce navigateur.</span></div>
+       <div class="co-club"><select id="coVSel" class="search" ${coEngineVoice()==="device"?"":"hidden"}><option value="">Automatique (la plus naturelle)</option></select>
        <select id="coRate" class="search"><option value="0.88">Posé</option><option value="0.95">Normal</option><option value="1.03">Vif</option></select>
        <button class="btn line" id="coVTest" type="button">Écouter</button></div>
-       <div class="small muted" style="margin-top:6px;max-width:46ch">Les voix ★ sont les plus naturelles. Pas de ★ ? Ouvre le Cockpit dans Edge, ou sur Mac télécharge une voix française « Premium » dans Réglages › Accessibilité › Contenu énoncé.</div></div></div>
+       <div class="small muted" id="coVNote" hidden style="margin-top:6px"></div>
+       <div class="small muted" style="margin-top:6px;max-width:52ch">${coCanPiper()?"« Réaliste » : une vraie voix d'IA qui tourne dans ton navigateur, gratuite. Elle se télécharge une seule fois (environ 60 Mo) au premier essai.":"Ici, la voix réaliste n'est pas disponible : ouvre ton Cockpit sur le site GitHub pour l'avoir."}</div></div></div>
    <div class="co-go"><button class="btn" id="coGo">Lancer l'appel</button><span class="co-mode" id="coMode">${coSample?"Gérant joué par Claude (réponses libres).":"Gérant automatique : il réagit à ta trame et à tes questions."}</span></div>
    ${h.length?`<div class="co-hist"><b>Tes derniers appels</b><ul>${h.map(x=>`<li><span class="sc">${x.note}</span><span>${esc(x.nom)} · ${esc(x.diff)} · ${esc(x.res)}</span><span class="small muted">${new Date(x.d).toLocaleDateString("fr-FR",{day:"numeric",month:"short"})}</span></li>`).join("")}</ul></div>`:""}`;
   el.querySelectorAll("[data-cop]").forEach(b=>b.onclick=()=>{CO.persona=CO_PERSONAS.find(p=>p.id===b.dataset.cop);CO.prospect=null;renderCoach()});
@@ -2753,6 +2789,9 @@ function renderCoach(){
   $("#coVoice").onchange=e=>{coStore.voice=e.target.checked;coSave()};
   coFillV();$("#coRate").value=String(coStore.rate||0.95);
   $("#coVSel").onchange=e=>{coStore.vname=e.target.value;coSave()};$("#coRate").onchange=e=>{coStore.rate=Number(e.target.value);coSave()};
+  el.querySelectorAll("[data-coe]").forEach(b=>b.onclick=()=>{coStore.engine=b.dataset.coe;coSave();el.querySelectorAll("[data-coe]").forEach(x=>x.setAttribute("aria-pressed",x===b));$("#coElBox").hidden=b.dataset.coe!=="eleven";$("#coVSel").hidden=b.dataset.coe!=="device"});
+  $("#coElKey").onchange=e=>{coStore.elKey=e.target.value.trim();coSave()};
+  if(coEngineVoice()==="piper"&&coCanPiper())coPrepPiper(CO.persona.genre==="f"?"f":"h",pc=>coVoiceNote(`Préparation de la voix réaliste : ${pc} %`)).then(()=>coVoiceNote("Voix réaliste prête.")).catch(()=>{});
   $("#coVTest").onclick=()=>{const P=CO.persona;CO.speaker="gerant";coSpeak(`Bonjour, ${P.accueil?"Julien":P.nom} à l'appareil. Oui, je vous écoute, c'est à quel sujet ?`,true)};$("#coAuto").onchange=e=>{coStore.auto=e.target.checked;coSave()};
   $("#coGo").onclick=coStart;
 }
@@ -2890,7 +2929,7 @@ function coRenderDebrief(r,st){
 /* ---------- branchements ---------- */
 $("#coMic").onclick=coMic;$("#coSend").onclick=coSend;
 $("#coSay").addEventListener("input",coGrow);$("#coSay").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();coSend()}});
-$("#coHang").onclick=$("#coHangM").onclick=()=>{try{speechSynthesis.cancel()}catch(e){}if(!CO.turns.some(t=>t.role==="user")){clearInterval(CO.timer);coView("coSetup");return}coEnd()};
+$("#coHang").onclick=$("#coHangM").onclick=()=>{coStop();if(!CO.turns.some(t=>t.role==="user")){clearInterval(CO.timer);coView("coSetup");return}coEnd()};
 $("#coTip").onclick=$("#coTipM").onclick=coTip;
 $("#coRep").onclick=()=>{const l=[...CO.turns].reverse().find(t=>t.role!=="user");if(l)coSpeak(coClean(l.content))};
 $("#coDeb").onclick=coDebrief;
