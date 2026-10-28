@@ -751,6 +751,7 @@ label.f{text-transform:none;letter-spacing:0;font-size:13.5px}
 .co-pc p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.45}
 .co-club{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .co-club select{max-width:100%}
+#coVSel{width:auto;min-width:260px;flex:1 1 260px}#coRate{width:auto;flex:0 0 auto}
 .co-opts{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
 .co-seg{display:inline-flex;background:var(--mist);border-radius:999px;padding:4px;gap:4px;flex-wrap:wrap}
 .co-seg button{border:0;background:transparent;border-radius:999px;padding:8px 16px;font-weight:700;color:var(--ink-2);font:inherit;font-weight:700;cursor:pointer}
@@ -768,7 +769,7 @@ label.f{text-transform:none;letter-spacing:0;font-size:13.5px}
 @media (max-width:760px){.co-phone{position:static;grid-template-columns:auto 1fr auto;justify-items:start;text-align:left;align-items:center;padding:14px 16px;border-radius:20px}}
 .co-phone .co-av{width:84px;height:84px;font-size:30px;position:relative}
 @media (max-width:760px){.co-phone .co-av{width:46px;height:46px;font-size:18px}}
-.co-av.talk::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--orange);animation:coRing 1.1s ease-out infinite}
+.co-av.talk::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--orange);animation:coRing 1.8s ease-out infinite}
 @keyframes coRing{from{opacity:.9;transform:scale(.95)}to{opacity:0;transform:scale(1.25)}}
 .co-phone h3{color:#F7F3EE;font-size:18px;margin:0}
 .co-phone .sub{font-size:13px;opacity:.7}
@@ -2683,15 +2684,32 @@ const coClean=t=>String(t||"").replace(/\[FIN:[a-z-]+\]/gi,"").replace(/\[(Julie
 function coErr(e){return ({not_granted:"Tu n'as pas autorisé Claude ici. Recharge la page pour réessayer.",rate_limited:"Trop d'appels d'un coup, attends une minute.",session_expired:"Ta session Claude a expiré, reconnecte-toi."})[e?.code]||"La réponse n'est pas passée, réessaie."}
 
 /* ---------- voix ---------- */
-let coVoices=[];const coLoadV=()=>{try{coVoices=speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}catch(e){}};
-if("speechSynthesis" in window){coLoadV();speechSynthesis.addEventListener?.("voiceschanged",coLoadV)}
+let coVoices=[];
+const CO_F=/amelie|amélie|audrey|marie|julie|celine|céline|virginie|aurelie|aurélie|denise|eloise|éloïse|vivienne|brigitte|yvette|coralie|jacqueline|charline|sylvie|ariane|josephine|female|femme|hortense|léa|lea\b/i,CO_M=/thomas|nicolas|daniel|paul|henri|remy|rémy|remi|rémi|antoine|jacques|jerome|jérôme|alain|claude|fabrice|gerard|guillaume|maurice|yves|male|homme|mathieu|olivier|felix|félix|eric/i;
+function coVQ(v){const n=v.name;let q=0;
+  if(/natural|neural|online/i.test(n))q+=60;      // voix naturelles Edge / Windows
+  if(/premium|enhanced|améliorée|amelioree|siri/i.test(n))q+=55; // voix premium Mac / iPhone
+  if(/google/i.test(n))q+=35;
+  if(/compact|espeak|robot|novelty|grandma|grandpa|bells|bad news|jester|organ|whisper|zarvox|trinoids|albert|bubbles|cellos|superstar|wobble|boing|bahh|fred|junior|kathy|ralph/i.test(n))q-=200;
+  if(/fr-FR/i.test(v.lang))q+=10;if(v.localService===false)q+=5;return q}
+const coVG=v=>CO_F.test(v.name)?"f":CO_M.test(v.name)?"h":"";
+const coLoadV=()=>{try{coVoices=speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang)&&coVQ(v)>-100).sort((a,b)=>coVQ(b)-coVQ(a));const sel=$("#coVSel");if(sel&&sel.options.length<=1)coFillV()}catch(e){}};
+if("speechSynthesis" in window){coLoadV();speechSynthesis.addEventListener?.("voiceschanged",coLoadV);setTimeout(coLoadV,800)}
+function coFillV(){const sel=$("#coVSel");if(!sel)return;const cur=coStore.vname||"";
+  sel.innerHTML=`<option value="">Automatique (la plus naturelle)</option>`+coVoices.map(v=>`<option value="${esc(v.name)}" ${v.name===cur?"selected":""}>${esc(v.name.replace(/Microsoft |Google /,"").replace(/\s*\(.*?\)\s*/g," ").trim())}${coVQ(v)>=50?" ★":""}${coVG(v)==="f"?" · femme":coVG(v)==="h"?" · homme":""}</option>`).join("")}
 function coGenre(){return CO.persona.accueil&&CO.speaker!=="gerant"?"f":CO.persona.genre}
-function coSpeak(t){
-  if(!$("#coVoice")?.checked||!("speechSynthesis" in window)||!t)return;
-  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="fr-FR";const g=coGenre();
-    const fv=coVoices.filter(v=>/amelie|amélie|audrey|marie|julie|celine|céline|virginie|aurelie|female|femme|google français|denise|eloise/i.test(v.name)),mv=coVoices.filter(v=>/thomas|nicolas|daniel|paul|henri|male|homme|remi|rémi|antoine|jacques/i.test(v.name));
-    const v=(g==="f"?fv[0]:mv[0])||coVoices[0];if(v)u.voice=v;u.rate=1.05;u.pitch=g==="f"?1.12:.88;
-    u.onstart=()=>$("#coAv")?.classList.add("talk");u.onend=u.onerror=()=>$("#coAv")?.classList.remove("talk");speechSynthesis.speak(u)}catch(e){}
+function coPickV(g){
+  if(coStore.vname){const v=coVoices.find(x=>x.name===coStore.vname);if(v)return v}
+  return coVoices.find(v=>coVG(v)===g&&coVQ(v)>=30)||coVoices.find(v=>coVQ(v)>=30)||coVoices.find(v=>coVG(v)===g)||coVoices[0];
+}
+function coSpeak(t,force){
+  if(!force&&!$("#coVoice")?.checked||!("speechSynthesis" in window)||!t)return;
+  try{speechSynthesis.cancel();
+    const txt=String(t).replace(/…/g,", ").replace(/\s*,\s*,/g,",").replace(/« | »/g,"");
+    const u=new SpeechSynthesisUtterance(txt);u.lang="fr-FR";const v=coPickV(coGenre());if(v){u.voice=v;u.lang=v.lang}
+    u.rate=Number(coStore.rate||0.95);u.pitch=1;u.volume=1;
+    u.onstart=()=>$("#coAv")?.classList.add("talk");u.onend=u.onerror=()=>$("#coAv")?.classList.remove("talk");
+    setTimeout(()=>speechSynthesis.speak(u),60)}catch(e){}
 }
 
 /* ---------- micro ---------- */
@@ -2722,13 +2740,20 @@ function renderCoach(){
    <div class="co-lbl">Ou un club de ton pipeline</div>
    <div class="co-club"><select id="coPros" class="search"><option value="">Choisir un club…</option>${pros.map(p=>`<option value="${esc(p.id)}" ${CO.prospect===p.id?"selected":""}>${esc(p.club)}${p.ville?" · "+esc(String(p.ville).split(" / ")[0]):""}${p.reseau==="Resofit"?" · Resofit":""}</option>`).join("")}</select><span class="small muted">Le gérant prend le prénom, le logiciel et la taille du club.</span></div>
    <div class="co-opts"><div><div class="co-lbl">Difficulté</div><div class="co-seg" id="coDiff">${["facile","normal","coriace"].map(d=>`<button data-cod="${d}" aria-pressed="${CO.diff===d}">${d[0].toUpperCase()+d.slice(1)}</button>`).join("")}</div></div>
-     <div><div class="co-lbl">Réglages</div><label class="co-chk"><input type="checkbox" id="coVoice" ${coStore.voice===false?"":"checked"}> Le gérant parle à voix haute</label><label class="co-chk"><input type="checkbox" id="coAuto" ${coStore.auto===false?"":"checked"}> Envoi auto quand tu as fini de parler</label></div></div>
+     <div><div class="co-lbl">Réglages</div><label class="co-chk"><input type="checkbox" id="coVoice" ${coStore.voice===false?"":"checked"}> Le gérant parle à voix haute</label><label class="co-chk"><input type="checkbox" id="coAuto" ${coStore.auto===false?"":"checked"}> Envoi auto quand tu as fini de parler</label></div>
+     <div><div class="co-lbl">Voix du gérant</div><div class="co-club"><select id="coVSel" class="search"><option value="">Automatique (la plus naturelle)</option></select>
+       <select id="coRate" class="search"><option value="0.88">Posé</option><option value="0.95">Normal</option><option value="1.03">Vif</option></select>
+       <button class="btn line" id="coVTest" type="button">Écouter</button></div>
+       <div class="small muted" style="margin-top:6px;max-width:46ch">Les voix ★ sont les plus naturelles. Pas de ★ ? Ouvre le Cockpit dans Edge, ou sur Mac télécharge une voix française « Premium » dans Réglages › Accessibilité › Contenu énoncé.</div></div></div>
    <div class="co-go"><button class="btn" id="coGo">Lancer l'appel</button><span class="co-mode" id="coMode">${coSample?"Gérant joué par Claude (réponses libres).":"Gérant automatique : il réagit à ta trame et à tes questions."}</span></div>
    ${h.length?`<div class="co-hist"><b>Tes derniers appels</b><ul>${h.map(x=>`<li><span class="sc">${x.note}</span><span>${esc(x.nom)} · ${esc(x.diff)} · ${esc(x.res)}</span><span class="small muted">${new Date(x.d).toLocaleDateString("fr-FR",{day:"numeric",month:"short"})}</span></li>`).join("")}</ul></div>`:""}`;
   el.querySelectorAll("[data-cop]").forEach(b=>b.onclick=()=>{CO.persona=CO_PERSONAS.find(p=>p.id===b.dataset.cop);CO.prospect=null;renderCoach()});
   el.querySelectorAll("[data-cod]").forEach(b=>b.onclick=()=>{CO.diff=b.dataset.cod;el.querySelectorAll("[data-cod]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
   $("#coPros").onchange=e=>{const p=prospects.find(x=>x.id===e.target.value);CO.prospect=p?p.id:null;if(p)CO.persona=coFromProspect(p);else CO.persona=CO_PERSONAS[0];renderCoach()};
-  $("#coVoice").onchange=e=>{coStore.voice=e.target.checked;coSave()};$("#coAuto").onchange=e=>{coStore.auto=e.target.checked;coSave()};
+  $("#coVoice").onchange=e=>{coStore.voice=e.target.checked;coSave()};
+  coFillV();$("#coRate").value=String(coStore.rate||0.95);
+  $("#coVSel").onchange=e=>{coStore.vname=e.target.value;coSave()};$("#coRate").onchange=e=>{coStore.rate=Number(e.target.value);coSave()};
+  $("#coVTest").onclick=()=>{const P=CO.persona;CO.speaker="gerant";coSpeak(`Bonjour, ${P.accueil?"Julien":P.nom} à l'appareil. Oui, je vous écoute, c'est à quel sujet ?`,true)};$("#coAuto").onchange=e=>{coStore.auto=e.target.checked;coSave()};
   $("#coGo").onclick=coStart;
 }
 function coMsg(cls,html){const d=document.createElement("div");d.className="co-msg "+cls;d.innerHTML=html;$("#coLog").append(d);d.scrollIntoView({block:"nearest",behavior:"smooth"});return d}
