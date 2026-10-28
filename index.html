@@ -917,7 +917,7 @@ body{margin:0}
             <div class="tref"><span class="tn">1</span><b>Ouverture et permission <small>10 s</small></b><span class="goal">Obtenir le droit de parler 30 secondes.</span><q>Je vous appelle sans rendez-vous : je vous dis en 30 secondes pourquoi, et vous me dites si ça vaut le coup de continuer. Ça vous va ?</q></div>
             <div class="tref"><span class="tn">2</span><b>Présentation d'EasyMembers <small>20 s</small></b><span class="goal">Dire concrètement ce qu'on fait avant toute question : trois idées, pas plus.</span><q>EasyMembers, c'est une appli sur iPad pour vendre vos abonnements à l'accueil : la personne choisit sa formule, signe son contrat et son mandat SEPA sur la tablette, et vous voyez les ventes en direct.</q></div>
             <div class="tref"><span class="tn">3</span><b>Raison de l'appel <small>20 s</small></b><span class="goal">Lui tendre un problème qu'il peut reconnaître.</span><q>Ce que les gérants nous disent souvent, c'est que les inscriptions prennent du temps et qu'il manque des papiers. Ça vous parle, ou chez vous c'est rodé ?</q></div>
-            <div class="tref"><span class="tn">4</span><b>Découverte <small>2 à 3 min</small></b><span class="goal">Situation, outil, problème, impact, volume. Il parle 70 % du temps.</span><q>Ça représente quoi, à peu près ? En temps, en dossiers incomplets, en personnes qui repartent sans signer ?</q></div>
+            <div class="tref"><span class="tn">4</span><b>Découverte <small>2 à 3 min</small></b><span class="goal">Situation, outil, problème, impact, volume. Il parle 70 % du temps. Questions à piocher : « Vous faites encore les contrats sur papier ? », « Le mandat SEPA est signé sur place ? », « Il manque parfois un RIB ? », « Vous savez qui a vendu quoi ce mois-ci ? »</span><q>Ça représente quoi, à peu près ? En temps, en dossiers incomplets, en personnes qui repartent sans signer ?</q></div>
             <div class="tref"><span class="tn">5</span><b>Reformulation <small>15 s</small></b><span class="goal">Obtenir son « oui, c'est ça » avant de présenter quoi que ce soit.</span><q>Si je résume bien : … et ce qui vous coûte le plus, c'est … C'est bien ça ?</q></div>
             <div class="tref"><span class="tn">6</span><b>Proposition de valeur <small>30 s</small></b><span class="goal">Un bénéfice par problème entendu, deux maximum, avec ses mots.</span><q>Justement, c'est exactement ce qu'on règle : formule, contrat et mandat SEPA signés sur l'iPad, et vous voyez qui vend quoi.</q></div>
             <div class="tref"><span class="tn">7</span><b>Objections</b><span class="goal">Accueillir, questionner, répondre, puis revenir au rendez-vous.</span><q>Je comprends. Qu'est-ce qui vous fait dire ça ?</q></div>
@@ -2081,10 +2081,11 @@ renderStats=function(){_renderStats();const el=$("#statsBody .cheat");if(el)el.i
 
 function scriptFor(p){
   if(p.brief&&/OUVERTURE ET PERMISSION/.test(p.brief)&&/PRÉSENTATION D.EASYMEMBERS/.test(p.brief)&&/\nBut :/.test(p.brief)){
-    if(/PRÉSENTATION COMPLÈTE/.test(p.brief))return p.brief;
-    const gen=scriptForGen(p),i=gen.indexOf("PRÉSENTATION COMPLÈTE"),j=gen.indexOf("\n3. RAISON",i);
-    const block=gen.slice(i,j).trim(),k=p.brief.search(/\n3\.\s*RAISON/);
-    return k>0?p.brief.slice(0,k)+"\n\n"+block+"\n"+p.brief.slice(k):p.brief+"\n\n"+block;
+    let b=p.brief;const gen=scriptForGen(p);
+    const inject=(key,endRe,beforeRe)=>{if(new RegExp(key).test(b))return;const i=gen.indexOf(key),j=gen.slice(i).search(endRe);const block=gen.slice(i,j>0?i+j:undefined).trim(),k=b.search(beforeRe);b=k>0?b.slice(0,k)+"\n\n"+block+"\n"+b.slice(k):b+"\n\n"+block};
+    inject("PRÉSENTATION COMPLÈTE",/\n3\. RAISON/,/\n3\.\s*RAISON/);
+    inject("QUESTIONS À PIOCHER",/\n5\. REFORMULATION/,/\n5\.\s*REFORMULATION/);
+    return b;
   }
   return scriptForGen(p);
 }
@@ -2164,6 +2165,27 @@ function scriptForGen(p){
 "Si la personne parle d'un problème que tu n'avais pas prévu : creuse-le, c'est un cadeau. « Racontez-moi, ça arrive souvent ? »",
 "Pourquoi c'est important : plus il parle de son problème, plus il se convainc tout seul. Note ses mots exacts, tu vas les réutiliser à l'étape suivante.",
 "Piège : poser les cinq questions à la suite comme un formulaire. Rebondis sur ses réponses, c'est une conversation.",
+"","QUESTIONS À PIOCHER (pendant la découverte)",
+"But : avoir sous la main des questions simples et concrètes qui font parler. Elles sont faciles à poser, on y répond par oui ou par non, et chaque réponse ouvre une porte. Pioches-en 3 ou 4 selon ce qu'il te raconte, pas toutes.",
+"« Vous faites encore les contrats sur papier ? »  → Si oui : « Et après, qui les ressaisit dans le logiciel ? Ça prend combien de temps ? »",
+"« Le mandat SEPA, il est signé sur place ou la personne doit revenir avec son RIB ? »  → S'il doit revenir : « Ça arrive qu'il ne revienne jamais ? »",
+"« Il vous arrive d'avoir des dossiers où il manque une signature, un RIB ou un certificat ? »  → Si oui : « Et qui court après, vous ou l'accueil ? »",
+"« Une inscription, du bonjour à la signature, ça vous prend combien de temps, à peu près ? »  → Note le chiffre : il te servira à la reformulation.",
+"« Les jours de rush, en septembre ou en janvier, ça se passe comment à l'accueil ? »  → C'est là que la file d'attente et les dossiers bâclés sortent.",
+"« Le contrat, la personne repart avec un exemplaire papier, ou vous lui envoyez par mail ? »",
+"« Les tarifs et les formules, vous les présentez comment ? Une plaquette, un écran, à l'oral ? »  → Si c'est à l'oral : « Et chaque conseiller les présente un peu à sa façon ? »",
+"« Les gens qui viennent se renseigner sans signer, vous les rappelez ? Comment vous savez qui rappeler ? »  → Si personne ne les rappelle : c'est de l'argent qui repart, garde-le pour la proposition de valeur.",
+`« Qui vend les abonnements chez vous ? Vous${net?", les managers de chaque club,":""} ou des conseillers dédiés ? »`,
+`« Vous savez combien d'abonnements chaque conseiller a signés ce mois-ci${net?", et dans chaque club":""} ? Vous le voyez où ? »  → Si c'est sur Excel ou « à la fin du mois » : c'est ton angle suivi des ventes.`,
+"« Vous vous fixez des objectifs de ventes par mois ? Et vous les suivez comment ? »",
+"« Vous avez une idée de votre taux de transformation, sur 10 personnes qui viennent se renseigner, combien signent ? »  → S'il ne sait pas : « C'est souvent le cas, c'est justement un chiffre qu'on voit tout de suite avec l'appli. »",
+`« ${lg?"Avec "+lg+", ":""}la fiche de l'adhérent, elle est créée à la main après la signature ? »`,
+"« Pour les mineurs, l'autorisation parentale, vous la gérez comment ? »",
+"« Le bilan ou le questionnaire santé à l'inscription, c'est sur papier aussi ? »",
+`« ${net?"Chaque club fait les inscriptions de la même façon, ou chacun a un peu sa méthode ?":"Vous avez un projet de 2e club, ou de recruter un conseiller dans les mois qui viennent ?"} »`,
+"« Si vous pouviez changer une seule chose dans la façon dont vous inscrivez vos adhérents, ce serait quoi ? »  → Question parfaite pour finir la découverte. Silence, et note sa réponse mot pour mot.",
+"Si la personne répond oui à plusieurs : creuse celle qui l'agace le plus, avec « Et ça vous coûte quoi, ça ? ».",
+"Piège : enchaîner les questions comme un sondage. Une question, tu écoutes, tu rebondis (« Ah oui ? Comment ça ? »), puis seulement la suivante.",
 "","5. REFORMULATION (15 s)",
 "But : lui montrer que tu as compris, et obtenir son « oui, c'est ça ». C'est ce oui qui te donne le droit de présenter EasyMembers.",
 "« Si je résume bien : aujourd'hui [ce qu'il t'a décrit, avec ses mots], et ce qui vous coûte le plus, c'est [son problème], à peu près [son chiffre]. C'est bien ça ? »",
