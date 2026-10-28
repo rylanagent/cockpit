@@ -738,6 +738,104 @@ label.f{text-transform:none;letter-spacing:0;font-size:13.5px}
 .rs-client .rs-cg{color:var(--ink-2)}
 @media (max-width:640px){.rs-client{grid-template-columns:1fr}.rs-big b{font-size:56px}.rs-act{margin-left:0}}
 
+/* ---------- entraînement d'appels ---------- */
+.co-lbl{font-family:var(--display,"Gabarito"),sans-serif;font-weight:700;font-size:15px;margin:22px 0 10px;color:var(--ink)}
+.co-personas{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.co-pc{text-align:left;border:1.5px solid var(--line-2);background:var(--white);border-radius:18px;padding:15px;display:grid;gap:6px;color:var(--ink);transition:border-color .2s,background .2s;font:inherit;cursor:pointer}
+.co-pc:hover{border-color:var(--ink-2)}
+.co-pc[aria-pressed="true"]{border-color:var(--orange);background:var(--orange-soft)}
+.co-who{display:flex;align-items:center;gap:10px}
+.co-av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:"Gabarito",sans-serif;font-weight:800;color:#fff;background:var(--ink-2);flex:none}
+.co-pc b{font-family:"Gabarito",sans-serif;font-size:16px}
+.co-pc .t{font-size:11.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.co-pc p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.45}
+.co-club{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.co-club select{max-width:100%}
+.co-opts{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+.co-seg{display:inline-flex;background:var(--mist);border-radius:999px;padding:4px;gap:4px;flex-wrap:wrap}
+.co-seg button{border:0;background:transparent;border-radius:999px;padding:8px 16px;font-weight:700;color:var(--ink-2);font:inherit;font-weight:700;cursor:pointer}
+.co-seg button[aria-pressed="true"]{background:var(--white);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.co-chk{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--ink-2);margin-top:6px;font-size:14.5px}
+.co-go{margin-top:26px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.co-mode{font-size:13px;color:var(--muted)}
+.co-hist{margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+.co-hist ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.co-hist li{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;font-size:14px;color:var(--ink-2)}
+.co-hist .sc{font-family:"Gabarito",sans-serif;font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink);min-width:3ch}
+.co-call{display:grid;grid-template-columns:250px minmax(0,1fr);gap:18px;align-items:start;padding-top:28px}
+@media (max-width:760px){.co-call{grid-template-columns:1fr;padding-top:16px}}
+.co-phone{background:#2B2A28;color:#F7F3EE;border-radius:28px;padding:22px 18px;display:grid;gap:14px;justify-items:center;text-align:center;position:sticky;top:90px}
+@media (max-width:760px){.co-phone{position:static;grid-template-columns:auto 1fr auto;justify-items:start;text-align:left;align-items:center;padding:14px 16px;border-radius:20px}}
+.co-phone .co-av{width:84px;height:84px;font-size:30px;position:relative}
+@media (max-width:760px){.co-phone .co-av{width:46px;height:46px;font-size:18px}}
+.co-av.talk::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--orange);animation:coRing 1.1s ease-out infinite}
+@keyframes coRing{from{opacity:.9;transform:scale(.95)}to{opacity:0;transform:scale(1.25)}}
+.co-phone h3{color:#F7F3EE;font-size:18px;margin:0}
+.co-phone .sub{font-size:13px;opacity:.7}
+.co-timer{font-variant-numeric:tabular-nums;font-size:22px;font-family:"Gabarito",sans-serif;font-weight:600;letter-spacing:.04em}
+@media (max-width:760px){.co-timer{font-size:17px}}
+.co-pat{display:flex;gap:4px;justify-content:center}
+.co-pat i{width:16px;height:6px;border-radius:9px;background:#4a4743}
+.co-pat i.on{background:var(--orange)}
+.co-pat-l{font-size:11px;opacity:.6;letter-spacing:.06em;text-transform:uppercase}
+@media (max-width:760px){.co-patw{display:none}}
+.co-acts{display:grid;gap:8px;width:100%}
+@media (max-width:760px){.co-acts{display:none}}
+.co-pbtn{border:0;border-radius:14px;padding:10px;background:#3A3835;color:#F7F3EE;font:inherit;font-weight:700;font-size:13.5px;cursor:pointer}
+.co-pbtn:hover{filter:brightness(1.2)}
+.co-pbtn.hang{background:var(--red);color:#fff}
+.co-conv{display:grid;gap:12px;min-width:0}
+.co-mob{display:none;gap:8px;flex-wrap:wrap}
+@media (max-width:760px){.co-mob{display:flex}}
+.co-log{display:grid;gap:10px;min-height:100px}
+.co-msg{max-width:88%;padding:11px 15px;border-radius:18px;font-size:15.5px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.co-msg.me{justify-self:end;background:var(--orange);color:#fff;border-bottom-right-radius:6px}
+.co-msg.him{justify-self:start;background:var(--mist);border-bottom-left-radius:6px;color:var(--ink)}
+.co-msg.him .n{display:block;font-size:11.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.co-msg.sys{justify-self:center;background:transparent;color:var(--muted);font-size:13px;text-align:center;max-width:100%}
+.co-msg.tip{justify-self:stretch;max-width:100%;background:var(--orange-soft);border:1px dashed var(--orange);color:var(--ink)}
+.co-msg.tip b{color:var(--orange-deep)}
+.co-input{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:end;background:var(--white);border:1.5px solid var(--line-2);border-radius:22px;padding:8px;position:sticky;bottom:12px}
+.co-input textarea{border:0;resize:none;background:transparent;color:var(--ink);font:inherit;padding:10px 4px;min-height:44px;max-height:160px;outline:none;width:100%}
+.co-mic{width:48px;height:48px;border-radius:50%;border:0;background:var(--ink);color:#fff;display:grid;place-items:center;cursor:pointer}
+.co-mic.on{background:var(--red);animation:coPulse 1s ease-in-out infinite}
+@keyframes coPulse{50%{transform:scale(1.08)}}
+.co-mic svg{width:22px;height:22px}
+.co-hint{font-size:13.5px;color:var(--ink-2);background:var(--mist);border-radius:14px;padding:10px 14px}
+.co-hint b{color:var(--ink)}
+.co-ended{background:var(--orange-soft);border-radius:18px;padding:16px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.co-ended b{font-family:"Gabarito",sans-serif;font-size:17px}
+.co-score{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:6px 0 20px}
+.co-ring{width:118px;height:118px;flex:none}
+.co-ring text{font-family:"Gabarito",sans-serif;font-weight:800;fill:var(--ink)}
+.co-res{display:inline-block;font-weight:900;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px;background:var(--mist);color:var(--ink-2)}
+.co-res.ok{background:var(--green-soft);color:var(--green)}
+.co-res.ko{background:#FBECE8;color:var(--red)}
+.co-stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:14px}
+.co-stats div{display:grid}
+.co-stats .v{font-family:"Gabarito",sans-serif;font-weight:800;font-size:24px;font-variant-numeric:tabular-nums}
+.co-stats .k{font-size:12.5px;color:var(--muted)}
+.co-steps{display:grid;margin:8px 0 22px}
+.co-step{display:grid;grid-template-columns:170px 110px minmax(0,1fr);gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line)}
+@media (max-width:640px){.co-step{grid-template-columns:1fr 100px}.co-step p{grid-column:1/-1}}
+.co-step b{font-family:"Gabarito",sans-serif;font-size:15px}
+.co-bar{display:block;height:8px;border-radius:99px;background:var(--mist);overflow:hidden;align-self:center}
+.co-bar i{display:block;height:100%;border-radius:99px}
+.co-step p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.co-box{border-radius:18px;padding:16px 18px;background:var(--mist);margin-bottom:14px}
+.co-box h3{font-size:16px;margin:0 0 8px}
+.co-box ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.co-swap{display:grid;gap:4px;padding:10px 0;border-top:1px solid var(--line-2)}
+.co-swap:first-of-type{border-top:0}
+.co-swap .a{color:var(--red);text-decoration:line-through;text-decoration-thickness:1px}
+.co-swap .b{color:var(--green);font-weight:700}
+.co-swap .c{font-size:13.5px;color:var(--ink-2)}
+.co-dots i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--orange);margin-right:4px;animation:coD 1s infinite}
+.co-dots i:nth-child(2){animation-delay:.15s}.co-dots i:nth-child(3){animation-delay:.3s}
+@keyframes coD{50%{opacity:.25}}
+.co-train{margin-top:14px}
+@media (prefers-reduced-motion:reduce){.co-av.talk::after,.co-mic.on,.co-dots i{animation:none}}
+
 body{margin:0}
 .login{position:fixed;inset:0;z-index:50;background:var(--white);display:grid;place-items:center;padding:24px max(20px,env(safe-area-inset-left,0px))}
 .login .box{width:min(400px,100%);display:grid;gap:22px;animation:in .6s var(--ease) both}
@@ -768,6 +866,7 @@ body{margin:0}
       <button role="tab" data-tab="agenda" aria-selected="false">Agenda</button>
       <button role="tab" data-tab="historique" aria-selected="false">Historique</button>
       <button role="tab" data-tab="stats" aria-selected="false">Stats</button>
+      <button role="tab" data-tab="coach" aria-selected="false">Entraînement</button>
       <button role="tab" data-tab="antiseche" aria-selected="false">Antisèche</button>
       <button role="tab" data-tab="reglages" aria-selected="false">Réglages</button>
     </nav>
@@ -906,6 +1005,44 @@ body{margin:0}
     </div>
   </section>
   <!-- ANTISÈCHE -->
+  <!-- ENTRAÎNEMENT -->
+  <section class="view" id="v-coach" hidden>
+    <div class="wrap">
+      <div id="coSetup"></div>
+      <div id="coCall" hidden>
+        <div class="co-call">
+          <aside class="co-phone">
+            <div class="co-av" id="coAv">K</div>
+            <div><h3 id="coName">Karim</h3><div class="sub" id="coClub"></div></div>
+            <div class="co-timer" id="coTimer">00:00</div>
+            <div class="co-patw"><div class="co-pat-l">Patience du gérant</div><div class="co-pat" id="coPat"></div></div>
+            <div class="co-acts">
+              <button class="co-pbtn" id="coTip">Souffle-moi la suite</button>
+              <button class="co-pbtn" id="coRep">Répéter sa phrase</button>
+              <button class="co-pbtn hang" id="coHang">Raccrocher</button>
+            </div>
+          </aside>
+          <div class="co-conv">
+            <div class="co-mob"><button class="btn line" id="coTipM">Souffle-moi</button><button class="btn line del" id="coHangM">Raccrocher</button></div>
+            <div class="co-hint" id="coHint" hidden></div>
+            <div class="co-log" id="coLog" aria-live="polite"></div>
+            <div class="co-ended" id="coEnded" hidden><div><b id="coEndT">Il a raccroché</b><div class="small muted" id="coEndS"></div></div><button class="btn" id="coDeb">Voir mon débrief</button></div>
+            <div class="co-input" id="coBar">
+              <button class="co-mic" id="coMic" aria-label="Parler"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11z"/></svg></button>
+              <textarea id="coSay" rows="1" placeholder="Appuie sur le micro et parle, ou écris ce que tu dis…"></textarea>
+              <button class="btn" id="coSend">Dire</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="coDebrief" hidden>
+        <div class="ph"><span class="eyebrow" id="coDE">Débrief</span><h1 id="coDT">Ton appel</h1>
+          <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn line" id="coSame">Rappeler le même</button><button class="btn" id="coNew">Nouvel appel</button></div></div>
+        <div id="coDB"></div>
+      </div>
+    </div>
+  </section>
+
   <section class="view" id="v-antiseche" hidden>
     <div class="wrap">
       <div class="ph"><span class="eyebrow">Antisèche</span><h1>Tout pour ton appel</h1><p>La trame, les règles et les réponses. À garder ouvert pendant que tu téléphones.</p></div>
@@ -1088,7 +1225,7 @@ function showTab(t){
 }
 document.querySelectorAll("#seg button").forEach(b=>b.onclick=()=>{showTab(b.dataset.tab);scrollTo({top:0,behavior:"smooth"})});
 addEventListener("resize",moveInd);document.fonts&&document.fonts.ready.then(moveInd);
-const h0=location.hash.slice(1);showTab(["jour","pipeline","mails","historique","stats","antiseche","reglages","agenda","resofit"].includes(h0)?h0:"jour");
+const h0=location.hash.slice(1);showTab(["jour","pipeline","mails","historique","stats","antiseche","reglages","agenda","resofit","coach"].includes(h0)?h0:"jour");
 
 /* ---------- aujourd'hui ---------- */
 function renderPoint(){
@@ -1273,7 +1410,7 @@ function renderSheet(force){
   const hist=(p.historique||[]).slice().reverse();
   const tabs=[["appel","Appel"],["email","Email"],["message","Message"],["historique","Historique"+(hist.length?" ("+hist.length+")":"")],["roi","Simulateur"],["modifier","Modifier"]];
   let pane="";
-  if(sheetTab==="appel")pane=`${trameHtml(scriptFor(p),"s-"+p.id)}${p.brief&&/OUVERTURE ET PERMISSION/.test(p.brief)?"":`<p class="auto-note">Trame remplie automatiquement avec les infos du club. L'agent la personnalise chaque matin.</p>`}`;
+  if(sheetTab==="appel")pane=`<button class="btn line co-train" data-coach="${esc(p.id)}">S'entraîner sur ce club avant d'appeler</button>${trameHtml(scriptFor(p),"s-"+p.id)}${p.brief&&/OUVERTURE ET PERMISSION/.test(p.brief)?"":`<p class="auto-note">Trame remplie automatiquement avec les infos du club. L'agent la personnalise chaque matin.</p>`}`;
   if(sheetTab==="email")pane=emailPaneHtml(p,mailDraft);
   if(sheetTab==="message")pane=dmDraft?`<pre class="script">${esc(dmDraft)}</pre><div class="actions"><button class="btn line" id="cpDm">Copier le message</button>${p.instagram?`<a class="mini" href="${esc(url(p.instagram))}" target="_blank" rel="noopener">Ouvrir Instagram</a>`:""}${p.linkedin?`<a class="mini" href="${esc(url(p.linkedin))}" target="_blank" rel="noopener">Ouvrir LinkedIn</a>`:""}${p.facebook?`<a class="mini" href="${esc(url(p.facebook))}" target="_blank" rel="noopener">Ouvrir Facebook</a>`:""}</div>`:`<p class="empty">Pas de message réseaux prêt. L'agent en écrit un quand il trouve le LinkedIn ou l'Instagram du gérant.</p>`;
   if(sheetTab==="historique")pane=`<ul class="hist-list">${hist.length?hist.map(h=>`<li><time>${esc(fmtShort((h.date||"").slice(0,10)))}</time><span><b>${esc(h.type)}</b>${h.note?esc(h.note):""}</span></li>`).join(""):`<li><time></time><span class="muted">Aucun échange enregistré pour l'instant.</span></li>`}</ul><label class="f">Ajouter une note<textarea id="hn-${id}" rows="2" placeholder="Ce qu'il t'a dit, son logiciel, le bon moment pour rappeler…"></textarea></label><div class="actions"><button class="btn line" id="addNote" ${canWrite?"":"disabled"}>Enregistrer la note</button></div>`;
@@ -2319,6 +2456,424 @@ document.querySelectorAll(".startSession").forEach(b=>b.addEventListener("click"
 function onClientsRs(s){clientsRs=s.docs.map(d=>({id:d.id,...d.data()}));renderResofit();refreshSheet()}
 
 $("#rsCardGo").onclick=()=>{showTab("resofit");scrollTo({top:0})};
+
+/* ---------- entraînement d'appels : un faux gérant pour s'exercer ---------- */
+const CO_PRODUIT=`EasyMembers : appli iPad pour vendre les abonnements à l'accueil d'une salle de sport. Le prospect choisit son objectif et sa formule sur la tablette, signe son contrat et son mandat SEPA, reçoit son contrat PDF par mail. Échéancier automatique, relances automatiques des devis non signés, tableau de bord (contrats, taux de conversion, CA, ventes par conseiller, dossiers sans RIB), objectifs par club et par vendeur, multi-clubs. Branché sur Resamania (fiche client) et Deciplus (formules). 100 € par mois + 300 € de mise en place, il faut un iPad. Plus de 80 salles équipées. EasyMembers est partenaire du réseau Resofit.`;
+const CO_PERSONAS=[
+ {id:"presse",nom:"Karim",genre:"h",club:"Gym Factory",ville:"Colomiers",tag:"Pressé",desc:"1 club, 600 adhérents. Toujours entre deux choses.",color:"#D9630F",car:"presse",nb:1,logiciel:"Deciplus",
+  f:{papier:true,saisie:true,rib:true,min:20,nouveaux:25,cons:2,excel:false,rush:true,relance:false,wish:"que la personne reparte inscrite sans que je ressaisisse tout le soir"}},
+ {id:"sceptique",nom:"Sophie",genre:"f",club:"Les Forges Fitness",ville:"Albi",tag:"Sceptique",desc:"2 clubs sous Resamania. « On a déjà tout ce qu'il faut. »",color:"#7D8894",car:"sceptique",nb:2,logiciel:"Resamania",
+  f:{papier:false,saisie:true,rib:false,min:20,nouveaux:60,cons:5,excel:true,rush:true,relance:true,wish:"savoir en temps réel qui vend quoi dans chaque club, sans mon Excel du lundi"}},
+ {id:"resofit",nom:"Thomas",genre:"h",club:"Arena Sport",ville:"Montauban",tag:"Réseau Resofit",desc:"Membre Resofit. Plutôt sympa, mais rien ne presse.",color:"#7C4DBA",car:"sympa",nb:1,logiciel:"Deciplus",resofit:true,
+  f:{papier:true,saisie:true,rib:true,min:15,nouveaux:35,cons:3,excel:false,rush:true,relance:true,impayes:3,wish:"ne plus avoir de mandats SEPA mal remplis, j'ai eu trois impayés le mois dernier"}},
+ {id:"accueil",nom:"Julien",genre:"h",club:"Body Concept",ville:"Toulouse",tag:"Barrage accueil",desc:"Tu tombes sur Léa, à l'accueil. Le gérant, il faut le mériter.",color:"#2E9E61",car:"normal",nb:1,logiciel:"Resamania",accueil:"Léa",
+  f:{papier:true,saisie:true,rib:true,min:20,nouveaux:40,cons:3,excel:false,rush:true,relance:true,wish:"que l'accueil arrête d'être débordé en septembre"}},
+ {id:"prix",nom:"Marc",genre:"h",club:"Ô Fit",ville:"Narbonne",tag:"Négociateur",desc:"Intéressé, mais tout est une question de prix.",color:"#C98A12",car:"prix",nb:1,logiciel:"Deciplus",
+  f:{papier:false,tablette:true,saisie:false,rib:true,min:12,nouveaux:30,cons:2,excel:false,rush:false,relance:true,wish:"payer moins cher que ce qu'on m'a proposé chez Fitness Vendor, honnêtement"}}
+];
+const CO_DIFF={facile:{pat:6,need:1},normal:{pat:4,need:2},coriace:{pat:3,need:3}};
+let CO={persona:CO_PERSONAS[0],diff:"normal",prospect:null,turns:[],t0:0,timer:null,ended:null,busy:false,st:null,lastHim:"",ctl:null};
+let coSample=null;const coSampleP=(async()=>{try{return window.claude?await window.claude.use("sample"):null}catch(e){return null}})();coSampleP.then(s=>coSample=s);
+let coStore={};try{coStore=JSON.parse(localStorage.getItem("emCoach")||"{}")}catch(e){}
+const coSave=()=>{try{localStorage.setItem("emCoach",JSON.stringify(coStore))}catch(e){}};
+const coN=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’']/g,"'");
+const coPick=a=>a[Math.floor(Math.random()*a.length)];
+
+/* fiche d'un vrai club du Cockpit -> faux gérant cohérent */
+function coFromProspect(p){
+  let h=0;for(const c of p.id)h=(h*31+c.charCodeAt(0))>>>0;const r=n=>{h=(h*1103515245+12345)>>>0;return h%n};
+  const lg=p.logiciel&&p.logiciel!=="Inconnu"?p.logiciel:["Resamania","Deciplus","Deciplus"][r(3)];
+  const prenom=p.prenom||"",fem=/a$|e$|ine$|elle$/i.test(prenom)&&!/^(jean-baptiste|baptiste|pierre|philippe|stephane|jerome|guillaume|maxime|antoine|alexandre|anthony|jose|mike|steve|claude|dominique)$/i.test(coN(prenom));
+  const papier=r(3)>0;
+  return {id:"club",nom:prenom||"Le gérant",genre:fem?"f":"h",club:p.club,ville:(p.ville||"").split(" / ")[0],tag:p.reseau==="Resofit"?"Ton club Resofit":"Ton club",color:"#3D3D3D",
+    car:p.categorie==="A"?"sceptique":["normal","presse","sympa"][r(3)],nb:p.nbClubs||1,logiciel:lg,resofit:p.reseau==="Resofit",prospectId:p.id,
+    f:{papier,tablette:!papier,saisie:papier||r(2)===0,rib:r(3)>0,min:[12,15,20,25][r(4)],nouveaux:(p.nbClubs||1)*[20,25,30,40][r(4)],cons:(p.nbClubs||1)+r(3),excel:(p.nbClubs||1)>1||r(2)===0,rush:true,relance:r(2)===0,
+      wish:["gagner du temps à l'accueil","ne plus courir après les RIB","savoir enfin qui vend quoi"][r(3)]}};
+}
+
+/* ---------- moteur sans IA ---------- */
+const CO_TOPICS={
+ papier:/papier|feuille|formulaire|imprim|a la main/, sepa:/sepa|mandat|rib|prelevement|iban/, temps:/combien de temps|ca (vous )?prend|duree|minutes par|temps par/,
+ volume:/combien (de )?(nouveaux|d'adherents|adherents|inscri|abonnements|personnes)|par mois/, logiciel:/logiciel|resamania|deciplus|outil de gestion|fitness vendor|vous etes sur quoi/,
+ equipe:/qui (vend|fait|s'occupe|gere)|conseill|commerciaux|vendeu|hotesse|combien a vendre/, suivi:/qui a vendu|suivi|objectif|tableau|statistique|vos chiffres|vision|taux de/,
+ rush:/rush|septembre|janvier|rentree|affluence|monde a l'accueil|file d'attente/, relance:/relanc|renseigner|sans signer|repartent|devis|rappelez/,
+ saisie:/ressais|saisi|recopi|retaper/, contrat:/exemplaire|contrat par mail|repart avec/, mineurs:/mineur|parental/, bilan:/bilan|questionnaire|sante/,
+ changer:/une seule chose|si vous pouviez|baguette/, comment:/ca se passe comment|comment ca se passe|comment vous faites|comment se passe|du premier bonjour|comment vous gerez/
+};
+function coAnalyse(t){
+  const n=coN(t),words=n.split(/\s+/).filter(Boolean).length,A={n,words,topics:[]};
+  for(const [k,re] of Object.entries(CO_TOPICS))if(re.test(n))A.topics.push(k);
+  A.askPerson=/(est disponible|je voudrais parler|je souhaiterais parler|puis-je parler|pourrais parler|parler (a|au|avec) (la personne|le gerant|la gerante|monsieur|madame|julien)|(le|la) (gerant|gerante|responsable)|julien)/.test(n);
+  A.permOk=/(30 secondes|trente secondes|vaut le coup|ca vous va|sans rendez-vous|si ca vaut)/.test(n);
+  A.permBad=/(je (ne )?vous derange|vous avez (deux|2|cinq|5|un peu de|une) minute|vous auriez (deux|2|cinq|5|un peu de|une) minute|desole de vous deranger)/.test(n);
+  A.pres=/(ipad|tablette|appli|application)/.test(n)&&/(contrat|abonnement|inscri|sign|sepa|vendre|accueil)/.test(n);
+  A.resofit=/resofit|reso fit|reseau/.test(n);
+  A.raison=/(je vous appelle (parce|car|pour|aujourd)|ce que les gerants|me disent souvent|si je vous appelle|on accompagne)/.test(n)||A.resofit;
+  A.impact=/(ca represente|ca vous coute|combien de (dossiers|personnes|fois|heures|impayes)|a peu pres combien|en temps|ca fait combien|perdez)/.test(n);
+  A.reform=/(si je resume|si je comprends bien|si j'ai bien compris|donc si je|c'est bien ca|si je reformule|donc aujourd'hui)/.test(n);
+  A.valeur=/(justement|c'est exactement ce qu|c'est precisement ce qu)/.test(n);
+  A.prix=/(100|cent) ?(€|euros|balles)|300 ?(€|euros)|par mois/.test(n)&&/(euro|€|balles|prix|coute|tarif)/.test(n);
+  A.day=/(lundi|mardi|mercredi|jeudi|vendredi|samedi|demain)/.test(n);A.hour=/(\d{1,2} ?h|\d{1,2} ?heures|matin|apres-midi|midi)/.test(n);
+  A.demo=/(demo|demonstration|vous le montrer|vous montrer|rendez-vous|rdv|20 minutes|vingt minutes|on se cale|on se voit|passer vous voir)/.test(n);
+  A.slot=A.day&&A.hour;
+  A.mail=/(mail|adresse)/.test(n);
+  A.bye=/(au revoir|bonne journee|bonne fin de journee|a bientot|bonne soiree)$/.test(n.replace(/[!. ]+$/,""));
+  A.branche=/(on (ne )?le remplace pas|on se branche|on ne remplace|ca se connecte|connecte a|compatible|en plus de)/.test(n);
+  A.quest=/\?/.test(t)||/^(est-ce|vous |comment|combien|qui |qu'est|quel|quelle|et vous|aujourd'hui vous|ca se passe|il vous arrive|vous avez)/.test(n);
+  A.vendreMot=/(vous vendre|je vends|offre speciale|promotion|solution innovante|digitalis|revolution)/.test(n);
+  return A;
+}
+function coMakeState(){return {phase:CO.persona.accueil?"accueil":"ouverture",pat:CO_DIFF[CO.diff].pat,topics:new Set(),flags:{},obj:null,objs:[],handled:0,early:0,mono:0,said:[],accTries:0,accepted:false}}
+const coFact=(k)=>CO.persona.f[k];
+function coTopicReply(k){
+  const P=CO.persona,f=P.f,lg=P.logiciel;
+  switch(k){
+   case "papier":return f.papier?coPick([`Oui, tout sur papier. La personne remplit sa fiche, elle signe, et après on ressaisit tout dans ${lg}.`,`Ouais, papier. On a nos fiches d'inscription, le contrat en deux exemplaires, tout ça.`]):f.tablette?`Non, on a une tablette Android avec un formulaire qu'on a fait nous-mêmes. Mais le mandat SEPA, lui, il est encore sur papier.`:`Non, on le fait sur l'ordi à l'accueil, directement dans ${lg}.`;
+   case "sepa":return f.rib?(f.impayes?`Le mandat on le fait sur papier, et c'est là que ça coince. Le mois dernier j'ai eu ${f.impayes} impayés parce que des mandats étaient mal remplis.`:`Le mandat c'est sur papier. Et il manque souvent le RIB, la personne doit revenir l'apporter… et des fois elle revient jamais.`):`Le mandat, on le fait sur place, ça va. Enfin, quand les gens ont leur RIB sur eux.`;
+   case "temps":return `Une inscription ? Je dirais ${f.min} minutes, facile. Plus quand il y a du monde.`;
+   case "volume":return `On fait à peu près ${f.nouveaux} nouveaux par mois${P.nb>1?", sur les "+P.nb+" clubs":""}. Un peu plus à la rentrée.`;
+   case "logiciel":return P.car==="sceptique"?`On est sur ${lg}, et franchement ça marche bien.`:`On est sur ${lg}.`;
+   case "equipe":return f.cons<=2?`Les inscriptions, c'est moi et une hôtesse, en alternance.`:`On est ${f.cons} à vendre les abonnements${P.nb>1?", répartis sur les clubs":""}.`;
+   case "suivi":return f.excel?`Honnêtement ? Je fais un Excel le lundi matin. Et encore, quand j'ai le temps.`:`Je regarde à la fin du mois dans ${lg}, en gros.`;
+   case "rush":return f.rush?`Septembre, c'est la folie. Il y a la queue à l'accueil, et on en perd, des gens qui repartent sans s'inscrire.`:`Ça va, on gère, on n'a pas trop de rush.`;
+   case "relance":return f.relance?`Ceux qui viennent se renseigner ? On note leur numéro sur un cahier… mais on les rappelle rarement, on n'a pas le temps.`:`On les rappelle, oui, quand on y pense.`;
+   case "saisie":return f.saisie?`Oui, c'est ${P.nb>1||f.cons>2?"l'accueil":"moi"} qui ressaisit. Ça me prend une heure par semaine, minimum.`:`Non, pas de ressaisie, c'est direct dans le formulaire.`;
+   case "contrat":return f.papier?`Il repart avec son exemplaire papier, oui.`:`On lui imprime, ou on lui envoie, ça dépend.`;
+   case "mineurs":return `Les mineurs ? Les parents signent une autorisation sur papier. Faut qu'ils viennent, c'est pas pratique.`;
+   case "bilan":return `Le questionnaire santé, c'est une feuille qu'ils remplissent à l'accueil.`;
+   case "changer":return `Si je pouvais changer une chose ? Hmm… ${f.wish}.`;
+   case "comment":return f.papier?`Ben la personne arrive, on lui fait visiter, on lui présente les formules, elle remplit la fiche et le contrat sur papier, elle signe le mandat, et après on saisit tout dans ${lg}.`:`La personne arrive, visite, on lui présente les formules, et on fait l'inscription sur l'ordi de l'accueil.`;
+  }
+  return "";
+}
+function coPain(){const f=CO.persona.f;return f.impayes?"les mandats mal remplis et les impayés":f.excel&&CO.persona.nb>1?"le suivi des ventes entre les clubs":f.rib?"les RIB qui manquent":f.saisie?"la ressaisie":"le temps à l'accueil"}
+function coObjection(kind){
+  const P=CO.persona,st=CO.st;st.obj=kind;st.objs.push(kind);
+  return {
+   logiciel:`On a déjà ${P.logiciel}, on a tout ce qu'il faut.`,
+   prix:`Ok… et ça coûte combien, votre truc ?`,
+   cher:`100 euros par mois ? C'est cher. Fitness Vendor m'a proposé moins.`,
+   doc:`Écoutez, envoyez-moi une doc par mail, je regarderai.`,
+   temps:`Là j'ai vraiment pas le temps. Faites court.`,
+   associe:`De toute façon, je décide rien sans mon associé.`
+  }[kind];
+}
+function coHandles(kind,A){
+  if(kind==="logiciel")return A.branche||A.quest||A.topics.length>0;
+  if(kind==="prix")return A.prix||/100|cent/.test(A.n);
+  if(kind==="cher")return /(rembours|un (seul )?abonnement|rentabl|temps|heures|compare|par rapport|qu'est-ce qui)/.test(A.n)||A.quest;
+  if(kind==="doc")return (A.quest||A.topics.length>0)&&!/(je vous envoie|pas de souci je vous)/.test(A.n)||(A.slot&&A.quest);
+  if(kind==="temps")return A.words<=45&&(A.permOk||A.quest||A.slot||/(rappel|plutot)/.test(A.n));
+  if(kind==="associe")return A.demo||/(tous les deux|avec lui|avec elle|present)/.test(A.n);
+  return false;
+}
+function coEngine(text){
+  const P=CO.persona,st=CO.st,A=coAnalyse(text),D=CO_DIFF[CO.diff];st.said.push(text);
+  const out=(t,end)=>({text:t,end});
+  if(A.bye&&A.words<12){return out(st.accepted?"Parfait, à bientôt !":"Au revoir.",st.accepted?"demo":(st.flags.slot?"rappel":"raccroche-moi"))}
+  // monologue
+  if(A.words>75){st.mono++;st.pat--;}
+  if(A.permBad)st.flags.permBad=true;
+  if(A.vendreMot){st.flags.jargon=true;st.pat--}
+  // ---- accueil
+  if(st.phase==="accueil"){
+    st.accTries++;
+    if(A.askPerson&&(A.raison||/(inscri|abonnement|accueil|resofit|partenaire)/.test(A.n)||st.accTries>1)&&A.words<45&&!A.vendreMot){st.phase="ouverture";st.flags.barrage=true;CO.speaker="gerant";return out("Je vous le passe, ne quittez pas. … Oui, Julien, j'écoute ?")}
+    if(A.askPerson){return out(coPick(["C'est à quel sujet ?","C'est pour vendre quelque chose ?"]))}
+    if(A.words>45||A.vendreMot){return out("Il est en rendez-vous, là. Vous voulez laisser un message ?",st.accTries>2?"rappel":null)}
+    if(st.accTries>2)return out("Écoutez, il est occupé. Rappelez plutôt en fin de matinée.","rappel");
+    return out("Oui ? Vous souhaitez parler à qui ?");
+  }
+  // ---- objection en attente
+  if(st.obj){
+    if(coHandles(st.obj,A)){st.handled++;st.pat=Math.min(st.pat+1,D.pat+1);const was=st.obj;st.obj=null;
+      if(was==="prix"){return out(coPick(["100 par mois… Hmm. Et concrètement, ça m'apporte quoi ?",`D'accord. Bon, et ça marcherait avec ${P.logiciel} ?`]))}
+      if(was==="cher"){return out("Ouais, vu comme ça… si ça me fait signer un ou deux abonnements de plus, ça se rembourse.")}
+      if(was==="logiciel"){if(A.topics.length)return out(coTopicReply(A.topics[0]).replace(/^/,"Ah, si ça se branche dessus, ok. ")) ;return out(`Ah, si ça se branche sur ${P.logiciel}, ok. Allez-y.`)}
+      if(was==="doc"&&A.topics.length){st.topics.add(A.topics[0]);return out(coTopicReply(A.topics[0]))}
+      if(was==="associe"){return out("Ouais, ça c'est possible. Il est là le mardi en général.")}
+      return out(coPick(["D'accord, allez-y.","Bon. Je vous écoute.","Ok, continuez."]));
+    }
+    st.pat--;
+    if(st.pat<=0)return out("Non, écoutez, ça m'intéresse pas. Bonne journée.","raccroche");
+    return out(coPick({logiciel:["Non mais je vous dis, on a ce qu'il faut.","Ça fait doublon avec ce qu'on a, non ?"],prix:["Oui mais c'est combien ? Donnez-moi un chiffre."],cher:["Ça reste cher pour moi."],doc:["Envoyez-moi la doc, je vous dis."],temps:["Faites vite, j'ai un client qui attend."],associe:["Je vous dis, faut voir avec mon associé."]}[st.obj]));
+  }
+  if(st.pat<=0)return out(coPick(["Écoutez, j'ai pas le temps pour ça. Au revoir.","Bon, ça m'intéresse pas, merci. Au revoir."]),"raccroche");
+  // ---- ouverture
+  if(!st.flags.opened){
+    st.flags.opened=true;
+    if(A.permOk){st.flags.perm=true;st.pat++;return out(P.car==="presse"?"Allez-y, 30 secondes alors.":coPick(["Allez-y, je vous écoute.","Oui, allez-y."]))}
+    if(A.permBad){st.pat--;return out(P.car==="presse"?coObjection("temps"):"Euh… ça dépend, c'est pour quoi ?")}
+    if(A.pres){st.flags.pres=true;st.flags.presEarly=true;if(A.resofit)st.flags.raison=true;return out(P.car==="sceptique"?coObjection("logiciel"):P.car==="prix"?coObjection("prix"):"Ah oui… et donc, pourquoi vous m'appelez moi ?")}
+    if(A.resofit){st.flags.raison=true;return out(P.resofit?"Ah, Resofit, oui. Je vous écoute.":"Resofit ? Euh… oui, c'est pour quoi ?")}
+    return out(coPick(["Oui ? C'est à quel sujet ?","Oui, c'est pour quoi ?"]));
+  }
+  // ---- présentation
+  if(A.pres&&!st.flags.pres){st.flags.pres=true;if(st.topics.size===0)st.flags.presBefore=true;if(A.resofit)st.flags.raison=true;
+    if(A.words>75)return out("Ouh là, ça fait beaucoup d'un coup. C'est quoi exactement, une appli ?");
+    if(P.car==="sceptique"&&!st.objs.includes("logiciel"))return out(coObjection("logiciel"));
+    if(P.car==="prix"&&!st.objs.includes("prix"))return out(coObjection("prix"));
+    if(P.car==="presse")return out("Ok. Et donc ? Allez à l'essentiel.");
+    return out(coPick(["D'accord. Et pourquoi vous m'appelez moi ?","Ok, je vois le genre. Et donc ?"]));
+  }
+  if(A.raison&&!st.flags.raison){st.flags.raison=true;
+    if(A.topics.length===0)return out(P.car==="sceptique"?"Chez nous ça tourne bien, je pense.":coPick(["Ouais, ça peut parler. Ça dépend.","Hmm, peut-être. Chez nous c'est assez rodé, enfin je crois."]));
+  }
+  // ---- demande de démo / créneau
+  if(A.demo||A.slot){
+    st.flags.demoAsk=true;if(A.slot)st.flags.slot=true;
+    const ready=st.topics.size>=D.need&&(st.flags.reform||CO.diff==="facile"||st.flags.impact);
+    if(!ready){st.early++;st.pat--;
+      if(st.pat<=0)return out("Non, là vous allez trop vite. Au revoir.","raccroche");
+      return out(st.objs.includes("doc")?"Je sais même pas encore si j'en ai besoin, votre truc.":coObjection("doc"));
+    }
+    if(P.car==="prix"&&!st.objs.includes("cher")&&st.objs.includes("prix"))return out(coObjection("cher"));
+    if(P.car==="prix"&&!st.objs.includes("prix"))return out(coObjection("prix"));
+    if(CO.diff==="coriace"&&!st.objs.includes("associe")&&P.nb>1)return out(coObjection("associe"));
+    if(!A.slot)return out("Pourquoi pas. Vous proposez quand ?");
+    st.accepted=true;
+    if(A.mail)return out(`Ok, ça marche pour moi. Mon mail c'est ${coN(P.nom).replace(/[^a-z]/g,"")||"contact"}@${coN(P.club).replace(/[^a-z]/g,"")}.fr. À ${coN(text).match(/lundi|mardi|mercredi|jeudi|vendredi|demain/)?.[0]||"bientôt"} !`,"demo");
+    return out("Ok, ça marche. Je note. Vous m'envoyez une invitation ?");
+  }
+  if(st.accepted&&A.mail){return out(`C'est ${coN(P.nom).replace(/[^a-z]/g,"")||"contact"}@${coN(P.club).replace(/[^a-z]/g,"")}.fr. À bientôt !`,"demo")}
+  if(st.accepted)return out("Parfait. À bientôt alors.","demo");
+  // ---- reformulation
+  if(A.reform){st.flags.reform=true;
+    if(st.topics.size>=2){st.pat++;return out(`Oui, c'est ça. Ce qui m'agace surtout, c'est ${coPain()}.`)}
+    return out("Euh… pas vraiment, on n'en a pas trop parlé encore.");
+  }
+  // ---- impact
+  if(A.impact){st.flags.impact=true;const f=P.f;
+    if(st.topics.size===0)return out("Ça représente quoi, quoi ? Je vois pas de quoi vous parlez.");
+    const h=Math.round(f.min*f.nouveaux/60);
+    return out(f.impayes?`Trois impayés le mois dernier, c'est 3 abonnements à courir après. Et du temps, beaucoup de temps.`:`Si je compte… ${f.min} minutes par inscription, ${f.nouveaux} par mois, ça fait ${h} heures par mois. ${f.rib?"Plus deux ou trois dossiers à reprendre parce qu'il manque le RIB.":""}`.trim());
+  }
+  // ---- valeur
+  if(A.valeur){st.flags.valeur=true;
+    if(st.topics.size>=1)return out(coPick(["Ah ouais, ça, ça m'intéresse.","Ok… et ça marche vraiment comme ça ?",`Et ça se branche sur ${P.logiciel}, vous dites ?`]));
+    return out("Hmm. Si vous le dites.");
+  }
+  // ---- prix annoncé spontanément
+  if(A.prix&&!st.flags.prixDit){st.flags.prixDit=true;return out(P.car==="prix"?coObjection("cher"):"D'accord, 100 par mois. Et ça fait quoi de plus que ce que j'ai ?")}
+  // ---- questions de découverte
+  const nt=A.topics.filter(k=>!st.topics.has(k));
+  if(A.topics.length){
+    const k=(nt[0]||A.topics[0]);st.topics.add(k);
+    let r=coTopicReply(k);
+    if(nt.length>1){st.topics.add(nt[1]);r+=" "+coTopicReply(nt[1])}
+    if(A.words>75)r="Attendez, vous me posez plein de trucs en même temps. "+r;
+    // objection naturelle au milieu de la découverte
+    if(st.topics.size===3&&CO.diff!=="facile"&&P.car==="sceptique"&&!st.objs.includes("logiciel"))r+=" Mais bon, "+coObjection("logiciel").toLowerCase();
+    return out(r);
+  }
+  if(A.words>75)return out(coPick(["Vous parlez beaucoup, là. C'est quoi la question ?","Ouais… je décroche un peu, là. Concrètement ?"]));
+  if(A.quest)return out(coPick(["Ça dépend. Vous voulez savoir quoi exactement ?","Hmm, pourquoi vous me demandez ça ?","Euh, je sais pas trop, c'est-à-dire ?"]));
+  return out(coPick(["Hmm hmm.","D'accord. Et ?","Ouais. Et donc ?","Je vois. Et concrètement ?"]));
+}
+
+/* ---------- IA (dans Claude) ---------- */
+function coFiche(){const P=CO.persona,f=P.f;
+  return `${P.accueil?"Tu joues d'abord Léa, hôtesse d'accueil qui filtre les commerciaux (« c'est à quel sujet ? », « c'est pour vendre quelque chose ? »). Si Rylan est poli, court et crédible, elle passe l'appel au gérant : commence alors ta réplique par « [Julien] ». Ensuite tu joues ":"Tu joues "}${P.nom}, ${P.genre==="f"?"gérante":"gérant"} de ${P.club} à ${P.ville}, ${P.nb} club${P.nb>1?"s":""}, ${f.nouveaux} nouveaux adhérents par mois, ${f.cons} personnes vendent les abonnements, logiciel ${P.logiciel}${P.resofit?", membre du réseau Resofit (tu as vaguement vu passer le nom EasyMembers)":""}. Inscriptions : ${f.papier?"sur papier puis ressaisie dans le logiciel":f.tablette?"tablette avec formulaire maison, mandat SEPA papier":"sur l'ordinateur de l'accueil"}, environ ${f.min} min par inscription. ${f.rib?"Il manque souvent un RIB ou une signature. ":""}${f.impayes?f.impayes+" impayés le mois dernier à cause de mandats mal remplis. ":""}${f.excel?"Suivi des ventes sur un Excel le lundi. ":""}${f.rush?"Rush à l'accueil en septembre et janvier. ":""}${f.relance?"Les gens qui se renseignent sans signer ne sont presque jamais rappelés. ":""}Ce que tu voudrais changer : ${f.wish}. Caractère : ${{presse:"pressé, tu coupes si on récite",sceptique:"sceptique, « on a déjà tout », tu veux des faits",sympa:"sympa mais rien ne presse, tu dis volontiers « envoyez-moi une doc »",prix:"tout ramène au prix, Fitness Vendor t'a proposé moins",normal:"normal, poli mais occupé"}[P.car]}.`}
+function coRules(){return `Tu joues un personnage dans un JEU DE RÔLE d'entraînement à la prospection téléphonique. Rylan, commercial chez EasyMembers, t'appelle sans rendez-vous. Sois réaliste, comme un vrai gérant de salle de sport français au téléphone.
+TON PERSONNAGE : ${coFiche()}
+NIVEAU : ${{facile:"plutôt ouvert, une ou deux objections simples",normal:"réaliste, 2 à 4 objections, tu ne donnes tes problèmes que si on te pose de bonnes questions, démo seulement si Rylan a compris ta situation et propose un créneau précis",coriace:"difficile et méfiant, objections en série, réponses courtes, tu raccroches si Rylan monologue ou insiste"}[CO.diff]}.
+EASYMEMBERS (tu ne le connais pas, tu le découvres si Rylan l'explique) : ${CO_PRODUIT}
+RÈGLES : réponds UNIQUEMENT la réplique de ton personnage, à l'oral, en français parlé naturel, 1 à 3 phrases courtes, sans liste ni markdown ni didascalie. Tu révèles tes problèmes seulement si une question y mène, avec des chiffres si la question est précise. Quand l'appel se termine, ajoute à la toute fin : [FIN:demo] si tu acceptes une démo à une date précise, [FIN:rappel] si tu acceptes un rappel ou une doc sans rendez-vous, [FIN:raccroche] si tu mets fin sans suite.`}
+const coClean=t=>String(t||"").replace(/\[FIN:[a-z-]+\]/gi,"").replace(/\[(Julien|Léa)\]\s*/g,"").trim();
+function coErr(e){return ({not_granted:"Tu n'as pas autorisé Claude ici. Recharge la page pour réessayer.",rate_limited:"Trop d'appels d'un coup, attends une minute.",session_expired:"Ta session Claude a expiré, reconnecte-toi."})[e?.code]||"La réponse n'est pas passée, réessaie."}
+
+/* ---------- voix ---------- */
+let coVoices=[];const coLoadV=()=>{try{coVoices=speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang))}catch(e){}};
+if("speechSynthesis" in window){coLoadV();speechSynthesis.addEventListener?.("voiceschanged",coLoadV)}
+function coGenre(){return CO.persona.accueil&&CO.speaker!=="gerant"?"f":CO.persona.genre}
+function coSpeak(t){
+  if(!$("#coVoice")?.checked||!("speechSynthesis" in window)||!t)return;
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="fr-FR";const g=coGenre();
+    const fv=coVoices.filter(v=>/amelie|amélie|audrey|marie|julie|celine|céline|virginie|aurelie|female|femme|google français|denise|eloise/i.test(v.name)),mv=coVoices.filter(v=>/thomas|nicolas|daniel|paul|henri|male|homme|remi|rémi|antoine|jacques/i.test(v.name));
+    const v=(g==="f"?fv[0]:mv[0])||coVoices[0];if(v)u.voice=v;u.rate=1.05;u.pitch=g==="f"?1.12:.88;
+    u.onstart=()=>$("#coAv")?.classList.add("talk");u.onend=u.onerror=()=>$("#coAv")?.classList.remove("talk");speechSynthesis.speak(u)}catch(e){}
+}
+
+/* ---------- micro ---------- */
+const coSR=window.SpeechRecognition||window.webkitSpeechRecognition;let coRec=null,coRecOn=false,coRecBase="",coMicBlocked=false;
+const CO_DICTEE=`<b>Le micro direct n'est pas dispo dans cette fenêtre.</b> Appuie dans la zone de texte et utilise la dictée de ton clavier (le micro du clavier sur iPhone ou Android, <b>Fn Fn</b> sur Mac), puis « Dire ». Sur ton site Cockpit dans Chrome ou Safari, le micro marche directement.`;
+function coHint(h){const el=$("#coHint");el.innerHTML=h||"";el.hidden=!h}
+function coMic(){
+  if(coRecOn){coRec?.stop();return}
+  if(!coSR||coMicBlocked){coHint(CO_DICTEE);$("#coSay").focus();return}
+  try{coRec=new coSR();coRec.lang="fr-FR";coRec.interimResults=true;coRec.continuous=false;coRecBase=$("#coSay").value.trim();
+    coRec.onresult=e=>{let t="";for(const r of e.results)t+=r[0].transcript;$("#coSay").value=(coRecBase?coRecBase+" ":"")+t;coGrow()};
+    coRec.onerror=e=>{coRecOn=false;$("#coMic").classList.remove("on");if(/not-allowed|service-not-allowed|audio-capture/.test(e.error)){coMicBlocked=true;coHint(CO_DICTEE);$("#coSay").focus()}};
+    coRec.onend=()=>{coRecOn=false;$("#coMic").classList.remove("on");if($("#coAuto").checked&&$("#coSay").value.trim()&&!coMicBlocked)coSend()};
+    try{speechSynthesis.cancel()}catch(e){}coRec.start();coRecOn=true;$("#coMic").classList.add("on");
+  }catch(e){coMicBlocked=true;coHint(CO_DICTEE);$("#coSay").focus()}
+}
+function coGrow(){const t=$("#coSay");t.style.height="auto";t.style.height=Math.min(t.scrollHeight,160)+"px"}
+
+/* ---------- écrans ---------- */
+function coView(v){["coSetup","coCall","coDebrief"].forEach(id=>$("#"+id).hidden=id!==v);scrollTo({top:0})}
+function renderCoach(){
+  const el=$("#coSetup");if(!el)return;if(document.activeElement&&document.activeElement.id==="coPros")return;
+  const pros=(typeof prospects!=="undefined"?prospects:[]).filter(p=>!["Perdu","Gagné"].includes(p.statut)&&p.categorie!=="X").sort((a,b)=>((b.reseau==="Resofit")-(a.reseau==="Resofit"))||a.club.localeCompare(b.club));
+  const cards=CO_PERSONAS.map(p=>`<button class="co-pc" data-cop="${p.id}" aria-pressed="${!CO.prospect&&CO.persona.id===p.id}"><span class="co-who"><span class="co-av" style="background:${p.color}">${p.accueil?"L":p.nom[0]}</span><span><b>${esc(p.accueil?"Léa, puis Julien":p.nom)}</b><br><span class="t">${esc(p.tag)}</span></span></span><p>${esc(p.desc)}</p></button>`).join("");
+  const h=(coStore.hist||[]).slice(-6).reverse();
+  el.innerHTML=`<div class="ph"><span class="eyebrow">Entraînement</span><h1>Appelle un gérant pour de faux</h1><p>Tu parles comme au téléphone, le gérant te répond à voix haute. Il a ses vrais problèmes cachés : à toi de les faire sortir avec tes questions. À la fin, ta note étape par étape.</p></div>
+   <div class="co-lbl">Qui tu appelles</div><div class="co-personas">${cards}</div>
+   <div class="co-lbl">Ou un club de ton pipeline</div>
+   <div class="co-club"><select id="coPros" class="search"><option value="">Choisir un club…</option>${pros.map(p=>`<option value="${esc(p.id)}" ${CO.prospect===p.id?"selected":""}>${esc(p.club)}${p.ville?" · "+esc(String(p.ville).split(" / ")[0]):""}${p.reseau==="Resofit"?" · Resofit":""}</option>`).join("")}</select><span class="small muted">Le gérant prend le prénom, le logiciel et la taille du club.</span></div>
+   <div class="co-opts"><div><div class="co-lbl">Difficulté</div><div class="co-seg" id="coDiff">${["facile","normal","coriace"].map(d=>`<button data-cod="${d}" aria-pressed="${CO.diff===d}">${d[0].toUpperCase()+d.slice(1)}</button>`).join("")}</div></div>
+     <div><div class="co-lbl">Réglages</div><label class="co-chk"><input type="checkbox" id="coVoice" ${coStore.voice===false?"":"checked"}> Le gérant parle à voix haute</label><label class="co-chk"><input type="checkbox" id="coAuto" ${coStore.auto===false?"":"checked"}> Envoi auto quand tu as fini de parler</label></div></div>
+   <div class="co-go"><button class="btn" id="coGo">Lancer l'appel</button><span class="co-mode" id="coMode">${coSample?"Gérant joué par Claude (réponses libres).":"Gérant automatique : il réagit à ta trame et à tes questions."}</span></div>
+   ${h.length?`<div class="co-hist"><b>Tes derniers appels</b><ul>${h.map(x=>`<li><span class="sc">${x.note}</span><span>${esc(x.nom)} · ${esc(x.diff)} · ${esc(x.res)}</span><span class="small muted">${new Date(x.d).toLocaleDateString("fr-FR",{day:"numeric",month:"short"})}</span></li>`).join("")}</ul></div>`:""}`;
+  el.querySelectorAll("[data-cop]").forEach(b=>b.onclick=()=>{CO.persona=CO_PERSONAS.find(p=>p.id===b.dataset.cop);CO.prospect=null;renderCoach()});
+  el.querySelectorAll("[data-cod]").forEach(b=>b.onclick=()=>{CO.diff=b.dataset.cod;el.querySelectorAll("[data-cod]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
+  $("#coPros").onchange=e=>{const p=prospects.find(x=>x.id===e.target.value);CO.prospect=p?p.id:null;if(p)CO.persona=coFromProspect(p);else CO.persona=CO_PERSONAS[0];renderCoach()};
+  $("#coVoice").onchange=e=>{coStore.voice=e.target.checked;coSave()};$("#coAuto").onchange=e=>{coStore.auto=e.target.checked;coSave()};
+  $("#coGo").onclick=coStart;
+}
+function coMsg(cls,html){const d=document.createElement("div");d.className="co-msg "+cls;d.innerHTML=html;$("#coLog").append(d);d.scrollIntoView({block:"nearest",behavior:"smooth"});return d}
+function coWho(){const P=CO.persona;return P.accueil&&CO.speaker!=="gerant"?"Léa · accueil":P.nom}
+function coPat(){const st=CO.st,max=CO_DIFF[CO.diff].pat+1;$("#coPat").innerHTML=Array.from({length:max},(_,i)=>`<i class="${i<st.pat?"on":""}"></i>`).join("")}
+async function coStart(){
+  if(!coSample){$("#coMode").textContent="Un instant…";const s=await Promise.race([coSampleP,new Promise(r=>setTimeout(()=>r(null),2500))]);if(s)coSample=s}
+  const P=CO.persona;CO.turns=[];CO.ended=null;CO.speaker=P.accueil?"accueil":"gerant";CO.st=coMakeState();CO.mode=coSample?"ia":"auto";
+  coView("coCall");$("#coLog").innerHTML="";$("#coEnded").hidden=true;$("#coBar").hidden=false;coHint("");$("#coSay").value="";coGrow();
+  $("#coAv").textContent=P.accueil?"L":P.nom[0];$("#coAv").style.background=P.color;$("#coName").textContent=P.accueil?P.club:P.nom;
+  $("#coClub").textContent=P.accueil?"Accueil · "+P.ville:`${P.genre==="f"?"Gérante":"Gérant"} · ${P.club}${P.ville?", "+P.ville:""}`;
+  coPat();
+  coMsg("sys",`Ça sonne… ${esc(P.accueil?"l'accueil":P.nom)} décroche. C'est à toi de parler en premier.`);
+  clearInterval(CO.timer);CO.t0=Date.now();CO.timer=setInterval(()=>{const s=Math.floor((Date.now()-CO.t0)/1000);$("#coTimer").textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")},500);
+  const hello=P.accueil?`${P.club} bonjour, Léa à l'appareil !`:`${P.club}, bonjour ?`;
+  CO.turns.push({role:"assistant",content:hello,who:coWho()});coMsg("him",`<span class="n">${esc(coWho())}</span>${esc(hello)}`);coSpeak(hello);
+  if(!coSR)coHint(CO_DICTEE);
+  $("#coSay").focus();
+}
+async function coSend(){
+  const t=$("#coSay").value.trim();if(!t||CO.busy||CO.ended)return;
+  if(coRecOn)coRec?.stop();$("#coSay").value="";coGrow();
+  CO.turns.push({role:"user",content:t});coMsg("me",esc(t));
+  const r=coEngine(t);if(CO.mode==="auto")coPat();
+  if(CO.mode==="auto"){
+    setTimeout(()=>{CO.turns.push({role:"assistant",content:r.text,who:coWho()});coMsg("him",`<span class="n">${esc(coWho())}</span>${esc(r.text)}`);coSpeak(r.text);if(r.end)coEnd(r.end)},450+Math.min(900,r.text.length*8));
+    return;
+  }
+  CO.busy=true;$("#coSend").disabled=true;
+  const bub=coMsg("him",`<span class="n">${esc(coWho())}</span><span class="co-dots"><i></i><i></i><i></i></span>`);CO.ctl=new AbortController();
+  const input=[{role:"user",content:coRules()+"\n\nL'appel commence, le personnage vient de décrocher."},...CO.turns.map(x=>x.role==="user"?{role:"user",content:"Rylan : "+x.content}:{role:"assistant",content:x.content})];
+  try{
+    const {text}=await coSample(input,{modelTier:"quick",cache:false,signal:CO.ctl.signal,onText:({text})=>{if(/\[Julien\]/.test(text))CO.speaker="gerant";bub.innerHTML=`<span class="n">${esc(coWho())}</span>${esc(coClean(text))}`}});
+    if(/\[Julien\]/.test(text))CO.speaker="gerant";
+    CO.turns.push({role:"assistant",content:text,who:coWho()});bub.innerHTML=`<span class="n">${esc(coWho())}</span>${esc(coClean(text))}`;coSpeak(coClean(text));
+    const m=text.match(/\[FIN:(demo|rappel|raccroche)\]/i);if(m)coEnd(m[1].toLowerCase());
+  }catch(e){CO.turns.pop();if(e.code==="cancelled")bub.remove();else{bub.className="co-msg sys";bub.textContent=coErr(e);$("#coSay").value=t}}
+  finally{CO.busy=false;$("#coSend").disabled=false}
+}
+function coEnd(kind){
+  if(CO.ended)return;CO.ended=kind||(CO.st?.accepted?"demo":"raccroche-moi");clearInterval(CO.timer);CO.ctl?.abort();if(coRecOn)coRec?.stop();
+  $("#coBar").hidden=true;$("#coEnded").hidden=false;
+  const T={demo:["Démo calée !","Il a dit oui. Voyons ce qui a marché."],rappel:["Rappel ou doc, pas de rendez-vous","Pas un non. Voyons comment aller jusqu'à la démo."],raccroche:["Il a raccroché","Ça arrive. Regardons où ça a coincé."],"raccroche-moi":["Tu as raccroché","Regardons l'appel étape par étape."]}[CO.ended];
+  $("#coEndT").textContent=T[0];$("#coEndS").textContent=T[1];
+}
+function coTip(){
+  if(CO.ended)return;const st=CO.st,P=CO.persona,f=st.flags;
+  const ask=["papier","sepa","temps","volume","suivi","relance","rush"].find(k=>!st.topics.has(k));
+  const Q={papier:"« Vous faites encore les contrats sur papier ? »",sepa:"« Le mandat SEPA, il est signé sur place ou la personne doit revenir avec son RIB ? »",temps:"« Une inscription, du bonjour à la signature, ça vous prend combien de temps ? »",volume:"« Vous signez combien de nouveaux adhérents par mois, à peu près ? »",suivi:"« Vous savez combien chaque conseiller a signé ce mois-ci ? Vous le voyez où ? »",relance:"« Les gens qui viennent se renseigner sans signer, vous les rappelez ? »",rush:"« Les jours de rush, en septembre, ça se passe comment à l'accueil ? »"};
+  let s;
+  if(st.phase==="accueil")s=["Barrage",`« Bonjour, Rylan d'EasyMembers${P.resofit?", le partenaire du réseau Resofit":""}. Je voudrais parler à Julien, c'est au sujet des inscriptions à l'accueil. »`];
+  else if(st.obj)s=["Objection",{logiciel:`« Très bien, on ne le remplace pas, on se branche dessus. Justement, ça se passe comment entre le moment où la personne dit oui et le moment où elle est dans ${P.logiciel} ? »`,prix:"« 100 € par mois et 300 € de mise en place. Un seul abonnement de plus dans le mois et c'est remboursé. Mais avant, je peux vous poser deux questions ? »",cher:"« Je comprends. Vous comparez à quoi ? … Combien de temps vos conseillers passent sur un dossier aujourd'hui ? »",doc:"« Avec plaisir. Pour vous envoyer ce qui vous concerne vraiment : aujourd'hui, les contrats, vous les faites sur papier ? »",temps:"« Je comprends. Je vous dis en 30 secondes pourquoi, et vous me dites si ça vaut le coup. Ça vous va ? »",associe:"« Bien sûr. Le plus simple, c'est qu'il soit là pour la démo : vous êtes dispo tous les deux plutôt mardi ou jeudi ? »"}[st.obj]];
+  else if(!f.opened)s=["Ouverture",`« Bonjour ${P.nom!=="Le gérant"?P.nom:""}, Rylan d'EasyMembers${P.resofit?", le partenaire du réseau Resofit":""}. Je vous appelle sans rendez-vous : je vous dis en 30 secondes pourquoi, et vous me dites si ça vaut le coup de continuer. Ça vous va ? »`];
+  else if(!f.pres)s=["Présentation","« EasyMembers, c'est une appli sur iPad pour vendre vos abonnements à l'accueil : la personne choisit sa formule, signe son contrat et son mandat SEPA sur la tablette, et reçoit son contrat par mail. Et vous suivez les ventes en direct. »"];
+  else if(!f.raison)s=["Raison de l'appel",`« ${P.resofit?"Je vous appelle parce que vous êtes dans le réseau Resofit. ":""}Ce que les gérants me disent souvent : les inscriptions prennent du temps, il manque des RIB, et c'est dur de savoir qui vend quoi. Est-ce que ça vous parle, ou chez vous c'est bien rodé ? »`];
+  else if(st.topics.size<3&&ask)s=["Découverte",Q[ask]];
+  else if(!f.impact)s=["Impact","« Ça représente quoi, à peu près ? En temps par semaine, ou en dossiers à reprendre ? »  Puis silence."];
+  else if(!f.reform)s=["Reformulation",`« Si je résume bien : aujourd'hui ${P.f.papier?"tout se fait sur papier et vous ressaisissez":"vos inscriptions prennent du temps"}, et ce qui vous coûte le plus, c'est ${coPain()}. C'est bien ça ? »`];
+  else if(!f.valeur)s=["Proposition de valeur",`« Justement, c'est exactement ce qu'on règle : ${coPain().includes("RIB")||coPain().includes("mandat")?"sur l'iPad, impossible de valider sans le RIB et les signatures":coPain().includes("suivi")?"vous voyez en direct qui vend quoi, club par club":"la personne signe tout sur l'iPad, plus rien à ressaisir"}. »`];
+  else s=["Conclusion","« Je vous propose 20 minutes pour vous le montrer avec vos formules. Mardi à 10h ou jeudi à 14h, qu'est-ce qui vous arrange ? »"];
+  coMsg("tip",`<b>Souffleur · ${esc(s[0])}</b><br>${esc(s[1])}`);
+}
+
+/* ---------- débrief ---------- */
+const CO_SWAPS=[
+ [/je (ne )?vous derange|desole de vous deranger/,"Je vous dérange ?","Je vous appelle sans rendez-vous : je vous dis en 30 secondes pourquoi, et vous me dites si ça vaut le coup de continuer. Ça vous va ?","« Je vous dérange » invite à dire oui, tu déranges. Ta formule lui laisse le contrôle."],
+ [/vous (avez|auriez) (deux|2|cinq|5|un peu de|une) minute/,"Vous avez deux minutes ?","Je vous dis en 30 secondes pourquoi je vous appelle, et vous me dites si ça vaut le coup.","Une question fermée sur son temps, c'est un non facile."],
+ [/quand vous voulez|quand ca vous arrange|vous etes dispo quand/,"Quand vous voulez.","Mardi à 10h ou jeudi à 14h, qu'est-ce qui vous arrange ?","Deux créneaux précis, sinon tu n'as jamais de date."],
+ [/je vous envoie (une|la|de la) doc|je vous envoie un mail avec/,"Je vous envoie une doc.","Avec plaisir. Pour vous envoyer ce qui vous concerne : c'est plutôt l'accueil ou le suivi des ventes qui vous intéresse ?","La doc seule, c'est un enterrement. Une question relance l'échange."],
+ [/n'hesitez pas/,"N'hésitez pas à revenir vers moi.","Je vous rappelle jeudi à 11h, ça vous va ?","C'est toi qui gardes la main sur la suite, avec une date."],
+ [/digitalis|solution innovante|revolution|optimiser votre/,"Une solution innovante pour digitaliser…","On fait une appli iPad pour signer les abonnements à l'accueil.","Le jargon fait commercial. Le concret fait gérant."],
+ [/je voulais (juste )?savoir si (ca|vous) (vous )?interess/,"Je voulais savoir si ça vous intéresse.","Est-ce que ça vous parle, ou chez vous c'est bien rodé ?","« Ça vous intéresse ? » appelle un non. Fais-le parler de chez lui."]
+];
+const CO_QBANK={papier:"« Vous faites encore les contrats sur papier ? »",sepa:"« Le mandat SEPA, il est signé sur place ou la personne doit revenir avec son RIB ? »",temps:"« Une inscription, ça vous prend combien de temps, à peu près ? »",volume:"« Vous signez combien de nouveaux adhérents par mois ? »",suivi:"« Vous savez combien chaque conseiller a signé ce mois-ci ? »",relance:"« Les gens qui se renseignent sans signer, vous les rappelez ? »",rush:"« En septembre, ça se passe comment à l'accueil ? »",logiciel:"« Vous êtes sur quel logiciel de gestion ? »",changer:"« Si vous pouviez changer une seule chose dans vos inscriptions, ce serait quoi ? »"};
+function coRuleDebrief(){
+  const st=CO.st,f=st.flags,said=st.said,me=said.join(" "),nme=coN(me);
+  const E=[];
+  E.push({nom:"Ouverture",note:f.perm?9:f.permBad?3:f.opened?5:null,commentaire:f.perm?"Tu as demandé la permission proprement : il t'a laissé parler.":f.permBad?"« Je vous dérange / deux minutes ? » : tu lui as tendu le non.":"Tu es entré direct sans demander la permission. Il n'a pas eu de raison de t'écouter."});
+  E.push({nom:"Présentation",note:f.pres?(st.mono?6:f.presBefore?9:7):2,commentaire:f.pres?(st.mono?"Présentation faite, mais trop longue : il a décroché.":f.presBefore?"Tu as présenté EasyMembers clairement avant les questions.":"Présentation faite, mais après les questions : présente d'abord, en 20 secondes."):"Il n'a jamais su clairement ce que fait EasyMembers."});
+  E.push({nom:"Raison de l'appel",note:f.raison?8:3,commentaire:f.raison?"Tu as donné une raison de l'appeler lui.":"Il ne sait pas pourquoi tu l'appelles lui. Donne un problème qu'il reconnaît, ou le partenariat Resofit."});
+  const tq=st.topics.size;E.push({nom:"Questions de découverte",note:Math.min(10,tq*2+(f.impact?2:0)),commentaire:tq?`${tq} sujet${tq>1?"s":""} creusé${tq>1?"s":""} (${[...st.topics].join(", ")})${f.impact?" et l'impact chiffré : top.":". Il manque la question d'impact chiffré."}`:"Aucune vraie question : c'est là que les problèmes sortent."});
+  E.push({nom:"Reformulation",note:f.reform?(tq>=2?9:5):(tq?1:null),commentaire:f.reform?(tq>=2?"Bien : il a confirmé « oui, c'est ça ».":"Reformulation trop tôt, il n'avait encore rien dit."):"Pas de « si je résume bien… ». C'est son oui qui te donne le droit de proposer."});
+  E.push({nom:"Proposition de valeur",note:f.valeur?8:(f.demoAsk?3:null),commentaire:f.valeur?"Tu as relié EasyMembers à son problème avec « Justement ».":"Tu n'as pas relié EasyMembers à SON problème avant de proposer la démo."});
+  E.push({nom:"Objections",note:st.objs.length?Math.round(10*st.handled/st.objs.length):null,commentaire:st.objs.length?`${st.handled} sur ${st.objs.length} bien traitée${st.handled>1?"s":""}. Méthode : accueillir, questionner, répondre court, revenir au rendez-vous.`:"Pas d'objection sur cet appel."});
+  E.push({nom:"Conclusion",note:f.slot?(st.accepted?10:6):f.demoAsk?4:1,commentaire:f.slot?(st.accepted?"Deux créneaux précis, démo calée.":st.early?"Créneau proposé trop tôt, avant d'avoir compris sa situation.":"Créneau précis, mais il n'était pas encore convaincu."):f.demoAsk?"Démo évoquée, mais sans créneau précis.":"Tu n'as pas demandé de rendez-vous."});
+  const scored=E.filter(e=>e.note!=null);let note=Math.round(scored.reduce((a,e)=>a+e.note,0)/Math.max(1,scored.length)*10);
+  if(CO.ended==="demo")note=Math.min(100,note+8);if(CO.ended==="raccroche")note=Math.max(0,note-8);
+  const swaps=CO_SWAPS.filter(s=>s[0].test(nme)).slice(0,4).map(s=>({tu_as_dit:s[1],dis_plutot:s[2],pourquoi:s[3]}));
+  if(st.mono&&swaps.length<4)swaps.push({tu_as_dit:"(un long paragraphe d'un coup)",dis_plutot:"Trois phrases maximum, puis une question.",pourquoi:"Au téléphone, au-delà de 20 secondes il décroche."});
+  const missed=Object.keys(CO_QBANK).filter(k=>!st.topics.has(k)).slice(0,4).map(k=>CO_QBANK[k]);
+  const forces=[];if(f.perm)forces.push("Ta demande de permission : il t'a laissé parler.");if(f.pres&&!st.mono)forces.push("Présentation courte et concrète.");if(tq>=3)forces.push(`Tu l'as fait parler sur ${tq} sujets.`);if(f.reform&&tq>=2)forces.push("Ta reformulation : il a dit « oui, c'est ça ».");if(st.handled)forces.push(`${st.handled} objection${st.handled>1?"s":""} bien retournée${st.handled>1?"s":""}.`);if(st.accepted)forces.push("Tu as obtenu une date de démo.");
+  const worst=scored.slice().sort((a,b)=>a.note-b.note)[0];
+  const ADV={"Ouverture":"Commence par ta phrase de permission, mot pour mot, et tais-toi.","Présentation":"Présente EasyMembers en 3 idées et 20 secondes, avant la première question.","Raison de l'appel":"Dis pourquoi tu l'appelles LUI : un problème qu'il reconnaît, ou Resofit.","Questions de découverte":"Pose au moins 3 questions concrètes (papier, SEPA, temps par inscription) avant de parler démo.","Reformulation":"Avant de proposer quoi que ce soit, dis « Si je résume bien… » et attends son oui.","Proposition de valeur":"Commence par « Justement » et relie un seul bénéfice à SON problème.","Objections":"Sur chaque objection : accueille, pose une question, réponds court, reviens au rendez-vous.","Conclusion":"Termine toujours par deux créneaux précis : mardi 10h ou jeudi 14h."};
+  return {note,resultat:CO.ended==="demo"?"Démo obtenue":CO.ended==="rappel"?"Rappel ou doc":"Pas de suite",titre:CO.ended==="demo"?(note>=80?"Démo calée, très bien joué":"Démo calée, mais tout n'était pas parfait"):worst?`À travailler : ${worst.nom.toLowerCase()}`:"Ton appel",etapes:E,forces,reformulations:swaps,questions_manquees:missed,a_travailler:worst&&worst.note<8?ADV[worst.nom]:"Continue comme ça, et passe en difficulté supérieure."};
+}
+async function coDebrief(){
+  coView("coDebrief");const P=CO.persona;
+  const me=CO.turns.filter(x=>x.role==="user").map(x=>x.content),him=CO.turns.filter(x=>x.role!=="user").map(x=>coClean(x.content));
+  const st={wMe:me.join(" ").split(/\s+/).filter(Boolean).length,wHim:him.join(" ").split(/\s+/).filter(Boolean).length,nQ:CO.mode==="auto"?CO.st.topics.size:me.join(" ").split("?").length-1,dur:Math.max(1,Math.round((Date.now()-CO.t0)/1000))};
+  $("#coDT").textContent="On regarde ton appel";$("#coDE").textContent=`Débrief · ${P.accueil?"Léa / Julien":P.nom} · ${CO.diff}`;
+  let r;
+  if(CO.mode==="ia"){
+    $("#coDB").innerHTML=`<div class="loading" style="display:flex;gap:10px;align-items:center;padding:24px 0;color:var(--ink-2)"><span class="co-dots"><i></i><i></i><i></i></span> Ton coach relit l'appel, environ 30 secondes.</div>`;
+    const conv=CO.turns.map(x=>(x.role==="user"?"RYLAN : ":String(x.who||"GÉRANT").toUpperCase()+" : ")+coClean(x.content)).join("\n");
+    try{r=await coSample.json(`Tu es un coach de vente téléphonique exigeant mais bienveillant. Évalue la performance de Rylan (commercial EasyMembers) dans cet appel d'entraînement, en le tutoyant, en français simple, sans tirets cadratins.
+Trame attendue : barrage si accueil, 1. ouverture et permission, 2. présentation d'EasyMembers en 20 s AVANT les questions, 3. raison de l'appel propre au club, 4. découverte avec questions concrètes (papier ? SEPA sur place ? RIB manquants ? qui vend quoi ? temps par inscription ?) et question d'impact chiffré, le gérant parle 70 % du temps, 5. reformulation et « oui c'est ça », 6. proposition de valeur avec « Justement », 7. objections : accueillir, questionner, répondre court, revenir au rendez-vous, 8. deux créneaux précis.
+Produit : ${CO_PRODUIT}
+Profil caché du gérant : ${coFiche()}
+Niveau ${CO.diff}, issue ${CO.ended}, durée ${st.dur} s, mots Rylan ${st.wMe}, mots gérant ${st.wHim}.
+TRANSCRIPTION :
+${conv}
+Réponds avec SEULEMENT ce JSON : {"note":0-100,"resultat":"Démo obtenue"|"Rappel ou doc"|"Pas de suite","titre":"phrase courte","etapes":[{"nom":"Ouverture","note":0-10 ou null,"commentaire":"1 phrase"}, …pour Ouverture, Présentation, Raison de l'appel, Questions de découverte, Reformulation, Proposition de valeur, Objections, Conclusion],"forces":["…"],"reformulations":[{"tu_as_dit":"citation exacte","dis_plutot":"…","pourquoi":"…"}],"questions_manquees":["« … »"],"a_travailler":"une phrase"}`,{modelTier:"default",cache:false})}
+    catch(e){r=null;toast(coErr(e)+" Débrief automatique à la place.")}
+  }
+  if(!r)r=coRuleDebrief();
+  coRenderDebrief(r,st);
+  coStore.hist=[...(coStore.hist||[]),{d:Date.now(),nom:P.accueil?"Léa / Julien":P.nom+(P.id==="club"?" ("+P.club+")":""),diff:CO.diff,note:Math.round(Number(r.note)||0),res:String(r.resultat||"")}].slice(-30);coSave();
+}
+function coRenderDebrief(r,st){
+  const note=Math.max(0,Math.min(100,Math.round(Number(r.note)||0))),res=String(r.resultat||""),cls=/démo/i.test(res)?"ok":/pas de suite/i.test(res)?"ko":"";
+  const C=2*Math.PI*48,col=note>=70?"var(--green)":note>=45?"var(--orange)":"var(--red)";
+  const ratio=st.wMe+st.wHim?Math.round(100*st.wHim/(st.wMe+st.wHim)):0;
+  $("#coDT").textContent=r.titre||"Ton appel";
+  const q=s=>esc(String(s||"").replace(/^«\s*|\s*»$/g,""));
+  $("#coDB").innerHTML=`<div class="co-score"><svg class="co-ring" viewBox="0 0 118 118" role="img" aria-label="Note ${note} sur 100"><circle cx="59" cy="59" r="48" fill="none" stroke="var(--mist)" stroke-width="12"/><circle cx="59" cy="59" r="48" fill="none" stroke="${col}" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-note/100)}" transform="rotate(-90 59 59)"/><text x="59" y="66" text-anchor="middle" font-size="30">${note}</text></svg>
+    <div><span class="co-res ${cls}">${esc(res)}</span><div class="co-stats"><div><span class="v">${Math.floor(st.dur/60)}:${String(st.dur%60).padStart(2,"0")}</span><span class="k">durée</span></div><div><span class="v">${st.nQ}</span><span class="k">${CO.mode==="auto"?"sujets creusés":"questions posées"}</span></div><div><span class="v" style="color:${ratio>=55?"var(--green)":ratio>=40?"var(--orange)":"var(--red)"}">${ratio} %</span><span class="k">parole du gérant (objectif 70 %)</span></div></div></div></div>
+   ${r.a_travailler?`<div class="co-box" style="background:var(--orange-soft)"><h3>Au prochain appel</h3><div>${esc(r.a_travailler)}</div></div>`:""}
+   <h3 style="margin:8px 0 4px">Étape par étape</h3><div class="co-steps">${(r.etapes||[]).map(s=>{const n=s.note==null?null:Math.max(0,Math.min(10,Number(s.note)));return `<div class="co-step"><b>${esc(s.nom)}</b><span>${n==null?`<span class="small muted">non atteinte</span>`:`<span class="co-bar"><i style="width:${n*10}%;background:${n>=7?"var(--green)":n>=4?"var(--orange)":"var(--red)"}"></i></span>`}</span><p>${n==null?"":`<b>${n}/10</b> · `}${esc(s.commentaire)}</p></div>`}).join("")}</div>
+   ${(r.reformulations||[]).length?`<div class="co-box"><h3>Dis-le autrement</h3>${r.reformulations.map(x=>`<div class="co-swap"><span class="a">« ${q(x.tu_as_dit)} »</span><span class="b">« ${q(x.dis_plutot)} »</span><span class="c">${esc(x.pourquoi)}</span></div>`).join("")}</div>`:""}
+   ${(r.questions_manquees||[]).length?`<div class="co-box"><h3>Les questions que tu aurais pu poser</h3><ul>${r.questions_manquees.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:""}
+   ${(r.forces||[]).length?`<div class="co-box" style="background:var(--green-soft)"><h3>Ce qui a marché</h3><ul>${r.forces.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:""}`;
+}
+
+/* ---------- branchements ---------- */
+$("#coMic").onclick=coMic;$("#coSend").onclick=coSend;
+$("#coSay").addEventListener("input",coGrow);$("#coSay").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();coSend()}});
+$("#coHang").onclick=$("#coHangM").onclick=()=>{try{speechSynthesis.cancel()}catch(e){}if(!CO.turns.some(t=>t.role==="user")){clearInterval(CO.timer);coView("coSetup");return}coEnd()};
+$("#coTip").onclick=$("#coTipM").onclick=coTip;
+$("#coRep").onclick=()=>{const l=[...CO.turns].reverse().find(t=>t.role!=="user");if(l)coSpeak(coClean(l.content))};
+$("#coDeb").onclick=coDebrief;
+$("#coSame").onclick=coStart;$("#coNew").onclick=()=>{renderCoach();coView("coSetup")};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-coach]");if(!b)return;const p=prospects.find(x=>x.id===b.dataset.coach);if(!p)return;closeSheet();CO.prospect=p.id;CO.persona=coFromProspect(p);showTab("coach");renderCoach();coView("coSetup");scrollTo({top:0})});
+renderCoach();
+document.querySelector('#seg [data-tab="coach"]')?.addEventListener("click",()=>{if(!$("#coSetup").hidden)renderCoach()});
+
 /* ---------- connexion ---------- */
 function live(ok,t){$("#dot").classList.toggle("on",ok);$("#liveTxt").textContent=t}
 renderPoint();renderPipe();renderMails();renderReglages();
