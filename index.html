@@ -837,6 +837,29 @@ label.f{text-transform:none;letter-spacing:0;font-size:13.5px}
 .co-train{margin-top:14px}
 @media (prefers-reduced-motion:reduce){.co-av.talk::after,.co-mic.on,.co-dots i{animation:none}}
 
+/* ---------- qui m'appelle : recherche par numéro ---------- */
+.who-btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-2);background:var(--white);border-radius:999px;padding:7px 13px;font:inherit;font-size:13px;font-weight:700;color:var(--ink-2);cursor:pointer;flex:none;white-space:nowrap}
+.who-btn:hover{border-color:var(--ink-2);color:var(--ink)}
+.who-btn svg{width:15px;height:15px}
+@media (max-width:1320px){.who-btn .l{display:none}.who-btn{padding:8px 10px}}
+.who-pan{position:fixed;inset:0;z-index:40;background:rgba(40,36,32,.28);display:grid;align-items:start;justify-items:center;padding:max(70px,calc(env(safe-area-inset-top,0px) + 60px)) max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
+.who-box{width:min(620px,100%);background:var(--white);border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.18);overflow:hidden;display:grid}
+.who-in{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.who-in svg{width:20px;height:20px;color:var(--orange);flex:none}
+.who-in input{flex:1;min-width:0;border:0;outline:none;font:inherit;font-size:18px;background:transparent;color:var(--ink)}
+.who-in kbd{font-size:11px;color:var(--muted);border:1px solid var(--line-2);border-radius:6px;padding:2px 6px;font-family:inherit}
+.who-res{max-height:min(60vh,520px);overflow:auto;padding:6px}
+.who-it{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;width:100%;text-align:left;border:0;background:transparent;border-radius:14px;padding:11px 12px;font:inherit;color:var(--ink);cursor:pointer}
+.who-it:hover,.who-it:focus-visible{background:var(--mist);outline:none}
+.who-it b{font-family:"Gabarito",sans-serif;font-size:16px}
+.who-it .m{grid-column:1/2;font-size:13.5px;color:var(--ink-2)}
+.who-it .t{font-variant-numeric:tabular-nums;font-weight:700;font-size:14px;color:var(--ink)}
+.who-it .t mark{background:var(--orange-soft);color:var(--orange-deep);border-radius:4px;padding:0 2px}
+.who-it .k{font-size:11.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);justify-self:end}
+.who-it .k.cl{color:var(--green)}
+.who-empty{padding:18px;color:var(--ink-2);font-size:14.5px}
+.who-empty b{color:var(--ink)}
+
 body{margin:0}
 .login{position:fixed;inset:0;z-index:50;background:var(--white);display:grid;place-items:center;padding:24px max(20px,env(safe-area-inset-left,0px))}
 .login .box{width:min(400px,100%);display:grid;gap:22px;animation:in .6s var(--ease) both}
@@ -871,10 +894,14 @@ body{margin:0}
       <button role="tab" data-tab="antiseche" aria-selected="false">Antisèche</button>
       <button role="tab" data-tab="reglages" aria-selected="false">Réglages</button>
     </nav>
+    <button class="who-btn" id="whoBtn" type="button" title="Retrouver un club avec son numéro (touche /)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="l">Qui m'appelle ?</span></button>
     <div class="sync"><i id="dot"></i><span id="liveTxt">Connexion…</span><button class="out" id="logout" hidden>Déconnexion</button></div>
   </div>
 </header>
 
+<div class="who-pan" id="whoPan" hidden><div class="who-box" role="dialog" aria-label="Qui m'appelle ?">
+  <div class="who-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="whoQ" type="search" inputmode="tel" autocomplete="off" placeholder="Numéro qui t'appelle, ou nom du club, du gérant…"><kbd>Échap</kbd></div>
+  <div class="who-res" id="whoRes"></div></div></div>
 <div class="login" id="login" hidden>
   <div class="box">
     <div class="logo"><span class="w">easy<b>members</b></span><span class="s">cockpit</span></div>
@@ -959,7 +986,7 @@ body{margin:0}
         <button class="pillf" data-f="cat-B" aria-pressed="false">B · Solides</button>
         <button class="pillf" data-f="cat-C" aria-pressed="false">C · Jeunes</button>
         <button class="pillf" data-f="cat-X" aria-pressed="false">À écarter</button>
-        <input class="search" id="q" type="search" placeholder="Rechercher un club, une ville…" aria-label="Rechercher">
+        <input class="search" id="q" type="search" placeholder="Club, ville, gérant ou numéro…" aria-label="Rechercher">
         <button class="btn line startSession">Session d'appels</button>
         <button class="btn" id="addBtn">Ajouter un prospect</button>
       </div>
@@ -1299,7 +1326,7 @@ function renderPipe(){
     if(pFilter==="resofit"&&p.reseau!=="Resofit")return false;
     if(pFilter==="retard"&&!isLate(p))return false;
     if(STATUTS.includes(pFilter)&&(p.statut||"À contacter")!==pFilter)return false;
-    if(q&&!(`${p.club} ${p.ville} ${p.contact} ${p.notes}`.toLowerCase().includes(q)))return false;return true});
+    if(q&&!pMatch(p,q))return false;return true});
   const rank={Chaud:0,"Tiède":1,Froid:2},dk=p=>p.dateProchaineAction||"9999";
   list.sort((a,b)=>((b.reseau==="Resofit")-(a.reseau==="Resofit"))||(isLate(b)-isLate(a))||((CAT_RANK[a.categorie]??3)-(CAT_RANK[b.categorie]??3))||((b.score??-1)-(a.score??-1))||dk(a).localeCompare(dk(b))||((rank[a.chaleur]??3)-(rank[b.chaleur]??3)));
   if(!prospects.length){$("#plist").innerHTML=`<div class="empty" style="padding:24px 0">Aucun prospect pour l'instant. L'agent en ajoute à chaque point.</div>`;return}
@@ -2427,7 +2454,7 @@ function renderResofit(){
   const B=[["appeler","À appeler",cnt("appeler")],["rappeler","À rappeler",cnt("rappeler")],["demos","Démos et signatures",cnt("demos")],["perdus","Pas intéressés",cnt("perdus")],["clients","Déjà clients",clientsRs.length]];
   const regs=[...new Set([...all,...clientsRs].map(regionOf).filter(Boolean))].sort();
   const q=rsQ.toLowerCase();
-  const match=x=>(!q||`${x.club} ${x.ville} ${x.prenom||""} ${x.nom||""}`.toLowerCase().includes(q))&&(!rsReg||regionOf(x)===rsReg);
+  const match=x=>(!q||pMatch(x,q))&&(!rsReg||regionOf(x)===rsReg);
   let list="";
   if(rsFilter==="clients"){
     const cl=clientsRs.filter(match).sort((a,b)=>a.club.localeCompare(b.club));
@@ -2443,7 +2470,7 @@ function renderResofit(){
    </div>
    <div class="tools rs-tools">${B.map(([k,l,n])=>`<button class="pillf" data-rsf="${k}" aria-pressed="${rsFilter===k}">${l}<span class="c">${n}</span></button>`).join("")}
      <select id="rsReg" class="search rs-sel"><option value="">Toutes les régions</option>${regs.map(r=>`<option ${r===rsReg?"selected":""}>${esc(r)}</option>`).join("")}</select>
-     <input class="search" id="rsQ" type="search" placeholder="Club, ville, gérant…" value="${esc(rsQ)}"></div>
+     <input class="search" id="rsQ" type="search" placeholder="Club, ville, gérant ou numéro…" value="${esc(rsQ)}"></div>
    <div class="plist">${list}</div>`;
   el.querySelectorAll("[data-rsf]").forEach(b=>b.onclick=()=>{rsFilter=b.dataset.rsf;renderResofit()});
   el.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openSheet(b.dataset.open));
@@ -2937,6 +2964,42 @@ $("#coSame").onclick=coStart;$("#coNew").onclick=()=>{renderCoach();coView("coSe
 document.addEventListener("click",e=>{const b=e.target.closest("[data-coach]");if(!b)return;const p=prospects.find(x=>x.id===b.dataset.coach);if(!p)return;closeSheet();CO.prospect=p.id;CO.persona=coFromProspect(p);showTab("coach");renderCoach();coView("coSetup");scrollTo({top:0})});
 renderCoach();
 document.querySelector('#seg [data-tab="coach"]')?.addEventListener("click",()=>{if(!$("#coSetup").hidden)renderCoach()});
+
+
+/* ---------- recherche par numéro : « Qui m'appelle ? » ---------- */
+function telD(s){let d=String(s||"").replace(/\D/g,"");if(d.startsWith("0033"))d="0"+d.slice(4);else if(d.startsWith("33")&&d.length>=11)d="0"+d.slice(2);return d}
+function telsOf(x){const out=[];const add=v=>{if(!v)return;String(v).split(/[\/,;]| ou /).forEach(t=>{const d=telD(t);if(d.length>=6)out.push({raw:t.trim(),d})})};
+  add(x.telephone);add(x.telClub);add(x.tel);add(x.mobile);(x.sites||[]).forEach(z=>{add(z.telephone);add(z.tel)});
+  const txt=`${x.contact||""} ${x.notes||""}`;(txt.match(/(?:\+33\s?|0)[1-9](?:[\s.\-]?\d{2}){4}/g)||[]).forEach(add);return out}
+function qDigits(q){const d=telD(q);return /^[\d\s.+\-()]+$/.test(String(q).trim())&&d.length>=4?d:""}
+function pMatch(x,q){q=String(q||"").trim().toLowerCase();if(!q)return true;
+  const qd=qDigits(q);if(qd)return telsOf(x).some(t=>t.d.includes(qd)||t.d.slice(1).includes(qd.replace(/^0/,"")));
+  const n=v=>String(v||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  return n(`${x.club} ${x.ville} ${x.prenom||""} ${x.nom||""} ${x.contact||""} ${x.email||""} ${x.notes||""}`).includes(n(q))}
+const fmtTel=d=>d.length===10?d.replace(/(\d{2})(?=\d)/g,"$1 ").trim():d;
+function whoHi(t,qd){const f=fmtTel(t.d);if(!qd)return esc(f);const i=t.d.indexOf(qd);if(i<0)return esc(f);
+  // surligne les chiffres trouvés dans la version formatée
+  let out="",k=0;for(const ch of f){if(/\d/.test(ch)){out+=(k>=i&&k<i+qd.length)?`<mark>${ch}</mark>`:ch;k++}else out+=ch}return out.replace(/<\/mark><mark>/g,"").replace(/<\/mark>(\s)<mark>/g,"$1")}
+function renderWho(){
+  const q=$("#whoQ").value.trim(),qd=qDigits(q),el=$("#whoRes");
+  if(!q){el.innerHTML=`<div class="who-empty">Tape ou colle le numéro qui t'appelle, même incomplet (les 4 derniers chiffres suffisent). Ça cherche dans tous tes clubs, y compris perdus et clients Resofit.</div>`;return}
+  const P=prospects.filter(p=>pMatch(p,q)).map(p=>({kind:"p",x:p})),C=(typeof clientsRs!=="undefined"?clientsRs:[]).filter(c=>pMatch(c,q)).map(c=>({kind:"c",x:c}));
+  const all=[...P,...C].slice(0,30);
+  if(!all.length){el.innerHTML=`<div class="who-empty"><b>Aucun club avec ${qd?"ce numéro":"ce nom"}.</b><br>${qd?"C'est peut-être un numéro perso du gérant. Demande-lui le nom de son club, puis ajoute le numéro dans sa fiche pour la prochaine fois.":"Essaie avec le numéro, ou une partie du nom."}</div>`;return}
+  el.innerHTML=all.map(({kind,x},i)=>{const ts=telsOf(x),t=(qd&&ts.find(t=>t.d.includes(qd)))||ts[0];
+    const who=[x.prenom,x.nom].filter(Boolean).join(" ");
+    const tag=kind==="c"?`<span class="k cl">Client</span>`:`<span class="k">${esc(x.statut||"À contacter")}</span>`;
+    return `<button class="who-it" data-who="${i}"><span><b>${esc(x.club)}</b></span>${tag}<span class="m">${esc([who,(x.ville||"").split(" / ")[0],x.reseau==="Resofit"||kind==="c"?"Resofit":"",x.logiciel&&x.logiciel!=="Inconnu"?x.logiciel:""].filter(Boolean).join(" · "))}</span><span class="t">${t?whoHi(t,qd):""}</span></button>`}).join("");
+  el.querySelectorAll("[data-who]").forEach(b=>b.onclick=()=>{const r=all[+b.dataset.who];closeWho();
+    if(r.kind==="p")openSheet(r.x.id);
+    else toast(`${r.x.club} est déjà client EasyMembers${r.x.prenom?" ("+[r.x.prenom,r.x.nom].filter(Boolean).join(" ")+")":""}.`)});
+}
+function openWho(){$("#whoPan").hidden=false;$("#whoQ").value="";renderWho();setTimeout(()=>$("#whoQ").focus(),30)}
+function closeWho(){$("#whoPan").hidden=true}
+$("#whoBtn").onclick=openWho;$("#whoQ").oninput=renderWho;
+$("#whoPan").addEventListener("click",e=>{if(e.target.id==="whoPan")closeWho()});
+$("#whoQ").addEventListener("keydown",e=>{if(e.key==="Escape")closeWho();if(e.key==="Enter"){const b=$("#whoRes .who-it");if(b)b.click()}});
+document.addEventListener("keydown",e=>{if(e.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||"")){e.preventDefault();openWho()}if(e.key==="Escape"&&!$("#whoPan").hidden)closeWho()});
 
 /* ---------- connexion ---------- */
 function live(ok,t){$("#dot").classList.toggle("on",ok);$("#liveTxt").textContent=t}
